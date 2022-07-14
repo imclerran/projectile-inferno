@@ -106,7 +106,7 @@ public class ECSEngine {
             _cm.addComponent(c);
         }
         for (ISystem s : sl) {
-            _sm.addSystem(s);
+            _sm.addSystem(s, e.getId());
         }
     }
 
@@ -122,7 +122,7 @@ public class ECSEngine {
             _cm.addComponent(c);
         }
         for (ISystem s : builder.buildSystemList()) {
-            _sm.addSystem(s);
+            _sm.addSystem(s, entity.getId());
         }
         builder.finishBuild();
         return entity;
@@ -156,12 +156,7 @@ public class ECSEngine {
      */
     public void update() {
         for (String sType : _systemUpdateOrder) {
-            Set<Map.Entry<Integer, ISystem>> systems = _sm.getSystemEntries(sType);
-            if(null != systems) {
-                for (Map.Entry<Integer, ISystem> e : systems) {
-                    e.getValue().update();
-                }
-            }
+            _sm.updateSystemOfType(sType);
         }
         _evm.dispatchEvents();
         removeFlagged();

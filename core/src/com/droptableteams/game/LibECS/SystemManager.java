@@ -3,17 +3,12 @@ package com.droptableteams.game.LibECS;
 import com.droptableteams.game.LibECS.EventManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SystemManager {
     private static SystemManager _sm;
-
     private EventManager _evm;
-    private HashMap<Integer, HashMap<String, ISystem>> _systemIdPools;
-    private HashMap<String, HashMap<Integer, ISystem>> _systemTypePools;
+    private HashMap<String, ISystem> _systemsPool;
 
 
     /**
@@ -21,8 +16,8 @@ public class SystemManager {
      */
     private SystemManager() {
         _evm = EventManager.getInstance();
-        _systemIdPools = new HashMap<Integer, HashMap<String, ISystem>>();
-        _systemTypePools = new HashMap<String, HashMap<Integer, ISystem>>();
+        //_systemIdPools = new HashMap<Integer, HashMap<String, ISystem>>();
+        //_systemTypePools = new HashMap<String, HashMap<Integer, ISystem>>();
     }
 
     /**
@@ -37,44 +32,6 @@ public class SystemManager {
         return _sm;
     }
 
-    /**
-     * Get all systems with a matching entity id.
-     *
-     * @param id  the entity id to match.
-     * @return  a list of matching systems.
-     */
-    public HashMap<String, ISystem> getSystems(int id) {
-        return _systemIdPools.get(id);
-    }
-
-    /**
-     * Get all systems with a matching system type.
-     *
-     * @param type the system type to match.
-     * @return  a list of matching systems.
-     */
-    public HashMap<Integer, ISystem> getSystems(String type) {
-        return _systemTypePools.get(type);
-    }
-
-    public Set<Map.Entry<Integer, ISystem>> getSystemEntries(String type) {
-        HashMap<Integer, ISystem> pool = _systemTypePools.get(type);
-        if(null != pool) {
-            return pool.entrySet();
-        }
-        return null;
-    }
-
-    /**
-     * Get the system with the specified id and type.
-     * e
-     * @param id  the id of the system to get.
-     * @param type  the type of the system to get.
-     * @return  the system requested.
-     */
-    public ISystem getSystem(int id, String type) {
-        return _systemIdPools.get(id).get(type);
-    }
 
     /**
      * Add a system to the manager.
@@ -82,26 +39,15 @@ public class SystemManager {
      * @param s  the system to add.
      * @return  the added system.
      */
-    public ISystem addSystem(ISystem s) {
-        int id = s.getId();
+    public ISystem addSystem(ISystem s, int id) {
         String type = s.getType();
-
-        if(_systemIdPools.containsKey(id)) {
-            _systemIdPools.get(id).put(type, s);
+        if(!_systemsPool.containsKey(type)) {
+            _systemsPool.put(type, s);
         }
         else {
-            _systemIdPools.put(id, new HashMap<String, ISystem>());
-            _systemIdPools.get(id).put(type, s);
+            _systemsPool.get(type).addEntity(id);
         }
-        if(_systemTypePools.containsKey(type)) {
-            _systemTypePools.get(type).put(id, s);
-        }
-        else {
-            _systemTypePools.put(type, new HashMap<Integer, ISystem>());
-            _systemTypePools.get(type).put(id, s);
-
-        }
-        return s;
+        return _systemsPool.get(type);
     }
 
     /**
@@ -111,32 +57,31 @@ public class SystemManager {
      * @return  true if systems were removed.
      */
     public boolean removeSystems(int id) {
-        HashMap<String, ISystem> flaggedForRemoval = _systemIdPools.remove(id);
-        if(null == flaggedForRemoval) {
-            return false;
+        ArrayList<String> flaggedForRemoval = new ArrayList<String>();
+        for(Map.Entry<String, ISystem> e : _systemsPool.entrySet()) {
+            if(e.getValue().isUsedBy(id)) {
+                flaggedForRemoval.add(e.getKey());
+            }
         }
-        for (Map.Entry<String, ISystem> e : flaggedForRemoval.entrySet()) {
-            _systemTypePools.get(e.getValue().getType()).remove(id);
+        for (String type : flaggedForRemoval) {
+            _systemsPool.get(type).removeEntity(id);
+            if (_systemsPool.get(type).isUnused()) {
+                _systemsPool.remove(type);
+            }
+        }
+        if (flaggedForRemoval.isEmpty()) {
+            return false;
         }
         return true;
     }
-
     /**
-     * Remove a system from the manager.
+     * update all systems matching the specified type.
      *
-     * @param s  the system to remove.
-     * @return  true if successfully removed.
+     * @param type  the type of the system to be updated
      */
-    public boolean removeSystem(ISystem s) {
-        int id = s.getId();
-        String type = s.getType();
-        if(_systemIdPools.containsKey(id)) {
-            _systemIdPools.get(id).remove(type);
+    public void updateSystemOfType(String type) {
+        if(_systemsPool.containsKey(type)) {
+            _systemsPool.get(type).update();
         }
-        if(_systemTypePools.containsKey(type)) {
-            _systemTypePools.get(type).remove(id);
-            return true;
-        }
-        return false;
     }
 }
