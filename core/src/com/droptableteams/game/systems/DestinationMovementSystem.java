@@ -9,34 +9,22 @@ import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.util.Utils;
 
 import java.io.Console;
+import java.util.HashSet;
 
-public class DestinationMovementSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
-
+public class DestinationMovementSystem extends ISystem {
 
     public DestinationMovementSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "DestinationMovementSystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        DestinationMovementComponent dmc = (DestinationMovementComponent)_cm.getComponent(_id, "DestinationMovementComponent");
-        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
+    public void update(int id) {
+        DestinationMovementComponent dmc = (DestinationMovementComponent)_cm.getComponent(id, "DestinationMovementComponent");
+        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
+        VelocityComponent vc = (VelocityComponent)_cm.getComponent(id, "VelocityComponent");
 
         travelTowardsDestination(dmc,lc,vc);
     }

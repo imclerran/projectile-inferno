@@ -8,34 +8,24 @@ import com.droptableteams.game.components.HasBeenInboundsComponent;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
+import java.util.HashSet;
+
 /**
  * TODO: Should be updated to to despawn when fully invisible, instead of after center-point passes boundary.
  */
-public class DespawnOutOfBoundsSystem implements ISystem {
-    private int _id;
-    private String _type;
-    ComponentManager _cm;
+public class DespawnOutOfBoundsSystem extends ISystem {
 
     public DespawnOutOfBoundsSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "DespawnOutOfBoundsSystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
-        HasBeenInboundsComponent ibc = (HasBeenInboundsComponent)_cm.getComponent(_id, "HasBeenInboundsComponent");
+    public void update(int id) {
+        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
+        HasBeenInboundsComponent ibc = (HasBeenInboundsComponent)_cm.getComponent(id, "HasBeenInboundsComponent");
         boolean hasBeenInbounds = ibc.getHasBeenInBounds();
         float leftBound = 0;
         float rightBound = Gdx.graphics.getWidth();
@@ -51,7 +41,7 @@ public class DespawnOutOfBoundsSystem implements ISystem {
         }
         else {
             if((leftBound > x ||  x > rightBound) || (bottomBound > y || y > topBound)) {
-                ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
+                ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
             }
         }
     }
