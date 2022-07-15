@@ -22,10 +22,6 @@ import java.util.Set;
  * TODO: decouple damage from collision...
  */
 public class BulletCollisionSystem extends ISystem {
-//    private int _id;
-//    private String _type;
-//    private ComponentManager _cm;
-//    private EntityManager _em;
 
     public BulletCollisionSystem(int id) {
         _idSet = new HashSet<Integer>();
@@ -33,11 +29,6 @@ public class BulletCollisionSystem extends ISystem {
         _type = "BulletCollisionSystem";
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     @Override
