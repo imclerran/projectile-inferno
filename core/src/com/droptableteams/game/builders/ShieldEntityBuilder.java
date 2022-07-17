@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.ShieldEntity;
 import com.droptableteams.game.systems.RelativePositionSystem;
@@ -36,7 +36,7 @@ public class ShieldEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public IEntity buildEntity() throws NullPointerException {
+    public AbstractEntity buildEntity() throws NullPointerException {
         checkIdNotNull();
         return new ShieldEntity(_id);
     }
@@ -47,10 +47,10 @@ public class ShieldEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+    public ArrayList<AbstractComponent> buildComponentList() throws NullPointerException {
         checkIdNotNull();
         ComponentManager cm = ComponentManager.getInstance();
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         LocationComponent lc = (LocationComponent) cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LocationComponent");
         SizeComponent sc = (SizeComponent) cm.getComponent((SpecialEntityIds.PLAYER_ENTITY), "SizeComponent");
         float x = 0, y = 0;
@@ -74,9 +74,9 @@ public class ShieldEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+    public ArrayList<AbstractSystem> buildSystemList() throws NullPointerException {
         checkIdNotNull();
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
         sl.add(new UpdateSpriteSystem(_id));
         sl.add(new SetHitboxLocationSystem(_id));
         sl.add(new RelativePositionSystem(_id));

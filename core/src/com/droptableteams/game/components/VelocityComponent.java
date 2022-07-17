@@ -1,10 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class VelocityComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class VelocityComponent extends AbstractComponent {
+
     private float _baseSpeed;
     private float _modifiedSpeed;
     private float _dx;
@@ -15,16 +14,6 @@ public class VelocityComponent implements IComponent {
         _baseSpeed = baseSpeed;
         _modifiedSpeed = baseSpeed;
         _type = "VelocityComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public float getBaseSpeed() {

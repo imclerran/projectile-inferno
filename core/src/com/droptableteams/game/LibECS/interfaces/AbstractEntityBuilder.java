@@ -28,7 +28,7 @@ public abstract class AbstractEntityBuilder {
         }
     }
 
-    public abstract IEntity buildEntity();
-    public abstract ArrayList<IComponent> buildComponentList();
-    public abstract ArrayList<ISystem> buildSystemList();
+    public abstract AbstractEntity buildEntity();
+    public abstract ArrayList<AbstractComponent> buildComponentList();
+    public abstract ArrayList<AbstractSystem> buildSystemList();
 }

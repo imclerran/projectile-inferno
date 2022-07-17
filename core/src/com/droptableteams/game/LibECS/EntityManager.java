@@ -1,8 +1,7 @@
 package com.droptableteams.game.LibECS;
 
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,16 +9,16 @@ public class EntityManager {
     private static EntityManager em;
 
     private int nextId;
-    private HashMap<Integer, IEntity> _entities;
-    private HashMap<String, HashMap<Integer, IEntity>> _entityTypePools;
+    private HashMap<Integer, AbstractEntity> _entities;
+    private HashMap<String, HashMap<Integer, AbstractEntity>> _entityTypePools;
 
     /**
      * A private constructor for the singleton pattern.
      */
     private EntityManager() {
         nextId = 0;
-        _entities = new HashMap<Integer, IEntity>();
-        _entityTypePools = new HashMap<String, HashMap<Integer, IEntity>>();
+        _entities = new HashMap<Integer, AbstractEntity>();
+        _entityTypePools = new HashMap<String, HashMap<Integer, AbstractEntity>>();
     }
 
     /**
@@ -40,9 +39,9 @@ public class EntityManager {
      * @param type  the type of entities to be retrieved.
      * @return  a list of all entities of the specified type.
      */
-    public HashMap<Integer, IEntity> getEntities(String type) {
+    public HashMap<Integer, AbstractEntity> getEntities(String type) {
         if(_entityTypePools.get(type) == null){
-            return new HashMap<Integer, IEntity>();
+            return new HashMap<Integer, AbstractEntity>();
         }
         return _entityTypePools.get(type);
     }
@@ -72,7 +71,7 @@ public class EntityManager {
      * @param e  the entity to be added to the pool.
      * @return  the added entity.
      */
-    public IEntity addEntity(IEntity e) {
+    public AbstractEntity addEntity(AbstractEntity e) {
         _entities.put(e.getId(), e);
         String type = e.getType();
         int id = e.getId();
@@ -80,7 +79,7 @@ public class EntityManager {
             _entityTypePools.get(type).put(id, e);
         }
         else {
-            _entityTypePools.put(type, new HashMap<Integer, IEntity>());
+            _entityTypePools.put(type, new HashMap<Integer, AbstractEntity>());
             _entityTypePools.get(e.getType()).put(id, e);
         }
         return e;
@@ -93,9 +92,9 @@ public class EntityManager {
      * @return  true if the entities were removed.
      */
     public boolean removeEntities(String type) {
-        HashMap<Integer, IEntity> flaggedForRemoval = _entityTypePools.remove(type);
+        HashMap<Integer, AbstractEntity> flaggedForRemoval = _entityTypePools.remove(type);
         if(null != flaggedForRemoval) {
-            for (Map.Entry<Integer, IEntity> e : flaggedForRemoval.entrySet()) {
+            for (Map.Entry<Integer, AbstractEntity> e : flaggedForRemoval.entrySet()) {
                 _entities.remove(e.getValue().getId());
             }
         }
@@ -110,7 +109,7 @@ public class EntityManager {
      */
     public boolean removeEntity(int id) {
         if(_entities.containsKey(id)) {
-            IEntity e = _entities.remove(id);
+            AbstractEntity e = _entities.remove(id);
             _entityTypePools.get(e.getType()).remove(id);
             return true;
         }
@@ -123,7 +122,7 @@ public class EntityManager {
      * @param e  the entity to remove.
      * @return  true if the the entity was removed.
      */
-    public boolean removeEntity(IEntity e) {
+    public boolean removeEntity(AbstractEntity e) {
         if(_entities.containsKey(e.getId())) {
             _entityTypePools.get(e.getType()).remove(e);
             _entities.remove(e.getId());

@@ -1,10 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class HasBeenInboundsComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class HasBeenInboundsComponent extends AbstractComponent {
+
     private boolean _hasBeenInBounds;
 
     public HasBeenInboundsComponent(int id, boolean hasBeenInbounds) {
@@ -12,16 +11,6 @@ public class HasBeenInboundsComponent implements IComponent {
         _hasBeenInBounds = hasBeenInbounds;
         _type = "HasBeenInboundsComponent";
     }
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
 
     public boolean getHasBeenInBounds() {
         return _hasBeenInBounds;

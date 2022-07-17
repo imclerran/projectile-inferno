@@ -1,23 +1,10 @@
 package com.droptableteams.game.entities;
 
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 
-public class ShieldEntity implements IEntity {
-
-    private int _id;
-    private String _type = "ShieldEntity";
-
+public class ShieldEntity extends AbstractEntity {
     public ShieldEntity(int id){
         _id = id;
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
+        _type = "ShieldEntity";
     }
 }

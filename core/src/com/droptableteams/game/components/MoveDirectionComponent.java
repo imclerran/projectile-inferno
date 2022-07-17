@@ -1,26 +1,15 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class MoveDirectionComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class MoveDirectionComponent extends AbstractComponent {
+
     private Float _radians;
 
     public MoveDirectionComponent(int id, Float radians) {
         _id = id;
         _radians = radians;
         _type = "MoveDirectionComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public Float getRadians() {

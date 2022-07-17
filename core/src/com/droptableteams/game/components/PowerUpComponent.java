@@ -1,11 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.util.data.PowerUpData;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class PowerUpComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class PowerUpComponent extends AbstractComponent {
+
     public String _powerUpType;
     public boolean _hasPowerUp;
 
@@ -31,16 +29,4 @@ public class PowerUpComponent implements IComponent {
             _hasPowerUp = false;
         }
     }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-
 }

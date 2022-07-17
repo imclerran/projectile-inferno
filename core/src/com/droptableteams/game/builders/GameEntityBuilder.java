@@ -5,12 +5,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.game.*;
 import com.droptableteams.game.entities.GameEntity;
-import com.droptableteams.game.systems.RespawnSystem;
 import com.droptableteams.game.systems.game.*;
 import com.droptableteams.game.util.ScriptReader;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
@@ -45,18 +44,18 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public IEntity buildEntity() throws NullPointerException {
+    public AbstractEntity buildEntity() throws NullPointerException {
         checkIdNotNull();
         return new GameEntity(_id);
     }
 
     @Override
-    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+    public ArrayList<AbstractComponent> buildComponentList() throws NullPointerException {
         checkIdNotNull();
         if(null == _batch) {
             throw new NullPointerException("Must call setBuildData() first.");
         }
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         cl.add(new RenderComponent(_id, _batch, EntityRenderOrder.get()));
         cl.add(new AssetManagerComponent(_id, _am));
         cl.add(new GameCheatsComponent(_id, 0.5f));
@@ -66,9 +65,9 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+    public ArrayList<AbstractSystem> buildSystemList() throws NullPointerException {
         checkIdNotNull();
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
         sl.add(new RenderSystem(_id));
         sl.add(new HandleInputSystem(_id));
         sl.add(new SpawnerSystem(_id));

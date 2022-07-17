@@ -1,11 +1,10 @@
 package com.droptableteams.game.components;
 
 import com.badlogic.gdx.utils.Array;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class CollisionsComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class CollisionsComponent extends AbstractComponent {
+
     private Array<Integer> _collisions;
 
     public CollisionsComponent(int id) {
@@ -13,17 +12,6 @@ public class CollisionsComponent implements IComponent {
         _type = "CollisionsComponent";
         _collisions = new Array<Integer>();
     }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
 
     public Array<Integer> getCollisions() {
         return _collisions;

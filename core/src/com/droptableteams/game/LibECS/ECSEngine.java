@@ -1,13 +1,11 @@
 package com.droptableteams.game.LibECS;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Description goes here...
@@ -100,13 +98,13 @@ public class ECSEngine {
      * @param cl  a list of components to add.
      * @param sl  a list of systems to add.
      */
-    public void addEntity(IEntity e, ArrayList<IComponent> cl, ArrayList<ISystem> sl) {
+    public void addEntity(AbstractEntity e, ArrayList<AbstractComponent> cl, ArrayList<AbstractSystem> sl) {
         _em.addEntity(e);
-        for (IComponent c : cl) {
+        for (AbstractComponent c : cl) {
             _cm.addComponent(c);
         }
-        for (ISystem s : sl) {
-            _sm.addSystem(s);
+        for (AbstractSystem s : sl) {
+            _sm.addSystem(s, e.getId());
         }
     }
 
@@ -115,14 +113,14 @@ public class ECSEngine {
      *
      * @param builder  a builder which generates the entity, components, and systems.
      */
-    public IEntity addEntity(AbstractEntityBuilder builder) {
+    public AbstractEntity addEntity(AbstractEntityBuilder builder) {
         builder.startBuild();
-        IEntity entity = _em.addEntity(builder.buildEntity());
-        for (IComponent c : builder.buildComponentList()) {
+        AbstractEntity entity = _em.addEntity(builder.buildEntity());
+        for (AbstractComponent c : builder.buildComponentList()) {
             _cm.addComponent(c);
         }
-        for (ISystem s : builder.buildSystemList()) {
-            _sm.addSystem(s);
+        for (AbstractSystem s : builder.buildSystemList()) {
+            _sm.addSystem(s, entity.getId());
         }
         builder.finishBuild();
         return entity;
@@ -156,12 +154,7 @@ public class ECSEngine {
      */
     public void update() {
         for (String sType : _systemUpdateOrder) {
-            Set<Map.Entry<Integer, ISystem>> systems = _sm.getSystemEntries(sType);
-            if(null != systems) {
-                for (Map.Entry<Integer, ISystem> e : systems) {
-                    e.getValue().update();
-                }
-            }
+            _sm.updateSystemOfType(sType);
         }
         _evm.dispatchEvents();
         removeFlagged();

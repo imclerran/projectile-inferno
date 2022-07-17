@@ -1,10 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class SizeComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class SizeComponent extends AbstractComponent {
+
     private float _width;
     private float _height;
 
@@ -13,15 +12,6 @@ public class SizeComponent implements IComponent {
         _width = width;
         _height = height;
         _type = "SizeComponent";
-    }
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public float getWidth() {

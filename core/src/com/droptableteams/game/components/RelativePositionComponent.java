@@ -1,10 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class RelativePositionComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class RelativePositionComponent extends AbstractComponent {
+
     private float _angle;
     private float _radius;
     private int _relativeEntityId;
@@ -15,16 +14,6 @@ public class RelativePositionComponent implements IComponent {
         _radius = radius;
         _relativeEntityId = relativeEntityId;
         _type = "RelativePositionComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public float getAngle() {

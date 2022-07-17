@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
@@ -34,15 +34,15 @@ public class LifeDisplayBuilder extends AbstractEntityBuilder {
         _id = null;
     }
     @Override
-    public IEntity buildEntity() {
+    public AbstractEntity buildEntity() {
         checkIdNotNull();
         return new LifeDisplayEntity(_id);
     }
 
     @Override
-    public ArrayList<IComponent> buildComponentList() {
+    public ArrayList<AbstractComponent> buildComponentList() {
         checkIdNotNull();
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         float width = 14;
         float height = 14;
         float x = Gdx.graphics.getWidth();
@@ -62,8 +62,8 @@ public class LifeDisplayBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() {
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+    public ArrayList<AbstractSystem> buildSystemList() {
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
         sl.add(new UpdateSpriteSystem(_id));
 
         return sl;
