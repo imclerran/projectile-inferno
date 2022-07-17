@@ -3,9 +3,7 @@ package com.droptableteams.game.components.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class RenderComponent implements AbstractComponent {
-    private int _id;
-    private String _type;
+public class RenderComponent extends AbstractComponent {
     private SpriteBatch _batch;
     private String[] _entityRenderOrder;
 
@@ -14,16 +12,6 @@ public class RenderComponent implements AbstractComponent {
         _batch = batch;
         _type = "RenderComponent";
         _entityRenderOrder = entityRenderOrder;
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public SpriteBatch getBatch() {

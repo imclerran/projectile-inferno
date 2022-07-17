@@ -12,32 +12,22 @@ import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class LifeUpdateSystem implements AbstractSystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
+import java.util.HashSet;
+
+public class LifeUpdateSystem extends AbstractSystem {
     private EntityManager _em;
 
     public LifeUpdateSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "LifeUpdateSystem";
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        AssetManager am = ((AssetManagerComponent) _cm.getComponent(_id, "AssetManagerComponent")).getAssetManager();
+    public void update(int id) {
+        AssetManager am = ((AssetManagerComponent) _cm.getComponent(id, "AssetManagerComponent")).getAssetManager();
         LifeCounterComponent counter =(LifeCounterComponent) _cm.getComponents("LifeCounterComponent").get(SpecialEntityIds.PLAYER_ENTITY);
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         if(counter != null  && _em.getEntities("LifeDisplayEntity") != null &&_em.getEntities("LifeDisplayEntity").size() > counter.getLifeCount()){

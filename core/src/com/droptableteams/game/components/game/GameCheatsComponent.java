@@ -2,9 +2,7 @@ package com.droptableteams.game.components.game;
 
 import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class GameCheatsComponent implements AbstractComponent {
-    private int _id;
-    private String _type;
+public class GameCheatsComponent extends AbstractComponent {
 
     private float _speedMultiplier;
     private float _slowMultiplier;
@@ -14,16 +12,6 @@ public class GameCheatsComponent implements AbstractComponent {
         _speedMultiplier = 1f;
         _slowMultiplier = slowMultiplier;
         _type = "GameCheatsComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public void toggleSpeedMultiplier(){

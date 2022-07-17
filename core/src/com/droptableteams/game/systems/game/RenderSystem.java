@@ -11,35 +11,24 @@ import com.droptableteams.game.components.game.RenderComponent;
 import com.droptableteams.game.components.SpriteComponent;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class RenderSystem implements AbstractSystem {
-    private int _id;
-    private String _type;
+public class RenderSystem extends AbstractSystem {
     private EntityManager _em;
-    private ComponentManager _cm;
 
     public RenderSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
         _type = "RenderSystem";
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        RenderComponent rc = (RenderComponent) _cm.getComponent(_id,"RenderComponent");
+    public void update(int id) {
+        RenderComponent rc = (RenderComponent) _cm.getComponent(id,"RenderComponent");
         SpriteBatch batch = rc.getBatch();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -49,8 +38,8 @@ public class RenderSystem implements AbstractSystem {
             if(null != entityMap) {
                 Set<Map.Entry<Integer, AbstractEntity>> entities = entityMap.entrySet();
                 for(Map.Entry<Integer, AbstractEntity> e : entities) {
-                    int id = e.getValue().getId();
-                    SpriteComponent sp = (SpriteComponent)_cm.getComponent(id, "SpriteComponent");
+                    int renderTargetId = e.getValue().getId();
+                    SpriteComponent sp = (SpriteComponent)_cm.getComponent(renderTargetId, "SpriteComponent");
                     if(sp.isVisible()) {
                         sp.getSprite().draw(batch);
                     }

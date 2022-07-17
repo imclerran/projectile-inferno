@@ -6,9 +6,7 @@ import com.droptableteams.game.util.Wave;
 
 import java.util.ArrayList;
 
-public class SpawnListComponent implements AbstractComponent {
-    private int _id;
-    private String _type;
+public class SpawnListComponent extends AbstractComponent {
     private ArrayList<Spawnable> _spawnList;
 
     public SpawnListComponent(int id, ArrayList<Wave> waveList) {
@@ -19,16 +17,6 @@ public class SpawnListComponent implements AbstractComponent {
         {
             _spawnList.addAll(x.enemies);
         }
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public ArrayList<Spawnable> getSpawnList() {
