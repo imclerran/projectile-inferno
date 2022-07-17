@@ -2,36 +2,26 @@ package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.DurationComponent;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class DespawnWithDurationSystem implements ISystem {
-    private int _id;
-    private String _type;
-    ComponentManager _cm;
+import java.util.HashSet;
+
+public class DespawnWithDurationSystem extends AbstractSystem {
 
     public DespawnWithDurationSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "DespawnWithDurationSystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        DurationComponent dc =  (DurationComponent)_cm.getComponent(_id, "DurationComponent");
+    public void update(int id) {
+        DurationComponent dc =  (DurationComponent)_cm.getComponent(id, "DurationComponent");
         if(dc.durationMet) {
-            ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
+            ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
         }
     }
 }

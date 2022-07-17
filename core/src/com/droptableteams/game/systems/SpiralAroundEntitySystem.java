@@ -2,38 +2,28 @@ package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.DurationComponent;
 import com.droptableteams.game.components.RelativePositionComponent;
 import com.droptableteams.game.components.SpiralComponent;
 import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 
-public class SpiralAroundEntitySytem implements ISystem {
-    int _id;
-    String _type;
-    ComponentManager _cm;
+import java.util.HashSet;
 
-    public SpiralAroundEntitySytem(int id) {
-        _id = id;
+public class SpiralAroundEntitySystem extends AbstractSystem {
+
+    public SpiralAroundEntitySystem(int id) {
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "SpiralAroundEntitySystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        SpiralComponent sc = (SpiralComponent) _cm.getComponent(_id, "SpiralComponent");
-        RelativePositionComponent rpc = (RelativePositionComponent)_cm.getComponent(_id, "RelativePositionComponent");
+    public void update(int id) {
+        SpiralComponent sc = (SpiralComponent) _cm.getComponent(id, "SpiralComponent");
+        RelativePositionComponent rpc = (RelativePositionComponent)_cm.getComponent(id, "RelativePositionComponent");
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         DurationComponent dc = (DurationComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "DurationComponent");
 
@@ -41,7 +31,6 @@ public class SpiralAroundEntitySytem implements ISystem {
         float currentRadius = rpc.getRadius();
         float deltaTheta = sc.getDeltaTheta();
         float deltaRadius = sc.getDeltaRadius();
-
         float timeDeltaAngle = deltaTheta * Gdx.graphics.getDeltaTime() * gcc.getSpeedMultiplier();
         float timeDeltaRadius = deltaRadius * Gdx.graphics.getDeltaTime() * gcc.getSpeedMultiplier();
 
@@ -49,7 +38,6 @@ public class SpiralAroundEntitySytem implements ISystem {
             dc.elapsedRadius += timeDeltaRadius;
             dc.elapsedTheta += timeDeltaAngle;
         }
-
         rpc.setAngle(currentAngle + timeDeltaAngle);
         rpc.setRadius(currentRadius + timeDeltaRadius);
     }

@@ -1,10 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class SpiralComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class SpiralComponent extends AbstractComponent {
+
     private float _deltaRadius;
     private float _deltaTheta;
 
@@ -14,17 +13,6 @@ public class SpiralComponent implements IComponent {
         _deltaRadius = deltaRadius;
         _deltaTheta = deltaTheta;
     }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
 
     public float getDeltaRadius() {
         return _deltaRadius;

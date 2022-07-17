@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BossEntity;
 import com.droptableteams.game.systems.*;
@@ -47,17 +47,17 @@ public class BossEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public IEntity buildEntity() throws NullPointerException {
+    public AbstractEntity buildEntity() throws NullPointerException {
         checkIdNotNull();
         return new BossEntity(_id);
     }
 
-    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+    public ArrayList<AbstractComponent> buildComponentList() throws NullPointerException {
         checkIdNotNull();
         if (null == _bd) {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         Json json = new Json();
         //BossType bt = BossTypeFactory.make(_bd.bossType);
         BossType bt = json.fromJson(BossType.class, Gdx.files.internal("scripts/enemies/" + _bd.bossType + ".json"));
@@ -80,9 +80,9 @@ public class BossEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+    public ArrayList<AbstractSystem> buildSystemList() throws NullPointerException {
         checkIdNotNull();
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
         sl.add(new UpdateSpriteSystem(_id));
         sl.add(new DestinationMovementSystem(_id));
         sl.add(new DespawnOutOfBoundsSystem(_id));

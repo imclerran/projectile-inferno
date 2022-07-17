@@ -1,10 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class LocationComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class LocationComponent extends AbstractComponent {
+
     private float _x;
     private float _y;
 
@@ -13,16 +12,6 @@ public class LocationComponent implements IComponent {
         _x = x;
         _y = y;
         _type = "LocationComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public float getX() {

@@ -1,7 +1,7 @@
 package com.droptableteams.game.LibECS;
 
-import com.droptableteams.game.LibECS.interfaces.IEvent;
-import com.droptableteams.game.LibECS.interfaces.IEventListener;
+import com.droptableteams.game.LibECS.interfaces.AbstractEvent;
+import com.droptableteams.game.LibECS.interfaces.AbstractEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,17 +18,17 @@ import java.util.Map;
 public class EventManager {
     private static EventManager _evm;
 
-    private ArrayList<IEvent> _events;
-    private HashMap<Integer, HashMap<String, IEventListener>> _eventListenerIdPool;
-    private HashMap<String, HashMap<Integer, IEventListener>> _eventListenerTypePool;
+    private ArrayList<AbstractEvent> _events;
+    private HashMap<Integer, HashMap<String, AbstractEventListener>> _eventListenerIdPool;
+    private HashMap<String, HashMap<Integer, AbstractEventListener>> _eventListenerTypePool;
 
     /**
      * A private constructor for the singleton pattern.
      */
     private EventManager() {
-        _events = new ArrayList<IEvent>();
-        _eventListenerIdPool = new HashMap<Integer, HashMap<String, IEventListener>>();
-        _eventListenerTypePool = new HashMap<String, HashMap<Integer, IEventListener>>();
+        _events = new ArrayList<AbstractEvent>();
+        _eventListenerIdPool = new HashMap<Integer, HashMap<String, AbstractEventListener>>();
+        _eventListenerTypePool = new HashMap<String, HashMap<Integer, AbstractEventListener>>();
     }
 
     /**
@@ -49,7 +49,7 @@ public class EventManager {
      * @param e  an event to add.
      * @return   the added event.
      */
-    public IEvent addAddEvent(IEvent e) {
+    public AbstractEvent addAddEvent(AbstractEvent e) {
         _events.add(e);
         return e;
     }
@@ -60,7 +60,7 @@ public class EventManager {
      * @param el  an event listener to add.
      * @return  the added event listener.
      */
-    public IEventListener addEventListener(IEventListener el) {
+    public AbstractEventListener addEventListener(AbstractEventListener el) {
         Integer id = el.getId();
         String type = el.getType();
 
@@ -68,7 +68,7 @@ public class EventManager {
             if (_eventListenerIdPool.containsKey(id)) {
                 _eventListenerIdPool.get(id).put(type, el);
             } else {
-                _eventListenerIdPool.put(id, new HashMap<String, IEventListener>());
+                _eventListenerIdPool.put(id, new HashMap<String, AbstractEventListener>());
                 _eventListenerIdPool.get(id).put(type, el);
             }
         }
@@ -78,7 +78,7 @@ public class EventManager {
                 _eventListenerTypePool.get(type).put(id, el);
             }
             else {
-                _eventListenerTypePool.put(type, new HashMap<Integer, IEventListener>());
+                _eventListenerTypePool.put(type, new HashMap<Integer, AbstractEventListener>());
                 _eventListenerTypePool.get(type).put(id, el);
             }
         }
@@ -90,23 +90,23 @@ public class EventManager {
      * then clears the events list.
      */
     public void dispatchEvents() {
-        for (IEvent e : _events) {
+        for (AbstractEvent e : _events) {
             Integer id = e.getId();
             String type = e.getType();
 
             if(null != id) {
-                HashMap<String, IEventListener> elMap = _eventListenerIdPool.get(id);
-                for (Map.Entry<String, IEventListener> entry : elMap.entrySet()) {
-                    IEventListener el = entry.getValue();
+                HashMap<String, AbstractEventListener> elMap = _eventListenerIdPool.get(id);
+                for (Map.Entry<String, AbstractEventListener> entry : elMap.entrySet()) {
+                    AbstractEventListener el = entry.getValue();
                     if(el.canHandle(id, type)) {
                         el.handleEvent(e.getArgs());
                     }
                 }
             }
             else if(null != type) {
-                HashMap<Integer, IEventListener> elMap = _eventListenerTypePool.get(type);
-                for (Map.Entry<Integer, IEventListener> entry : elMap.entrySet()) {
-                    IEventListener el = entry.getValue();
+                HashMap<Integer, AbstractEventListener> elMap = _eventListenerTypePool.get(type);
+                for (Map.Entry<Integer, AbstractEventListener> entry : elMap.entrySet()) {
+                    AbstractEventListener el = entry.getValue();
                     if(el.canHandle(id, type)) {
                         el.handleEvent(e.getArgs());
                     }
@@ -123,8 +123,8 @@ public class EventManager {
      * @return  true if at least one event listener was removed.
      */
     public boolean removeEventListeners(int id) {
-        HashMap<String, IEventListener> flaggedForRemoval = _eventListenerIdPool.remove(id);
-        for(Map.Entry<String, IEventListener> e : flaggedForRemoval.entrySet()) {
+        HashMap<String, AbstractEventListener> flaggedForRemoval = _eventListenerIdPool.remove(id);
+        for(Map.Entry<String, AbstractEventListener> e : flaggedForRemoval.entrySet()) {
             String type = e.getValue().getType();
             if(null != type) {
                 _eventListenerTypePool.get(type).remove(id);
@@ -141,8 +141,8 @@ public class EventManager {
      */
     public boolean removeEventListeners(String type) {
 
-        HashMap<Integer, IEventListener> flaggedForRemoval = _eventListenerTypePool.remove(type);
-        for(Map.Entry<Integer, IEventListener> e : flaggedForRemoval.entrySet()) {
+        HashMap<Integer, AbstractEventListener> flaggedForRemoval = _eventListenerTypePool.remove(type);
+        for(Map.Entry<Integer, AbstractEventListener> e : flaggedForRemoval.entrySet()) {
             Integer id = e.getValue().getId();
             if(null != id) {
                 _eventListenerTypePool.get(type).remove(id);
@@ -160,8 +160,8 @@ public class EventManager {
      */
     public boolean removeEventListener(int id, String type) {
         // TODO: fix always returns true
-        IEventListener el1 = _eventListenerIdPool.get(id).remove(type);
-        IEventListener el2 = _eventListenerTypePool.get(type).remove(id);
+        AbstractEventListener el1 = _eventListenerIdPool.get(id).remove(type);
+        AbstractEventListener el2 = _eventListenerTypePool.get(type).remove(id);
         if(null != el1 || null != el2) {
             return true;
         }

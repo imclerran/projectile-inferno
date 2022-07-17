@@ -1,16 +1,17 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class LifeCounterComponent implements IComponent {
-    private int _id;
+public class LifeCounterComponent extends AbstractComponent {
+
     private int _count;
-    private String _type = "LifeCounterComponent";
     private boolean _isDead;
 
     public LifeCounterComponent(int id, int initialLives){
         _id = id;
+        _type = _type = "LifeCounterComponent";
         _count = initialLives;
+        _isDead = false;
     }
 
     public  int getLifeCount(){

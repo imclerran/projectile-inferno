@@ -1,35 +1,25 @@
 package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.RelativePositionComponent;
 
-public class RelativePositionSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
+import java.util.HashSet;
+
+public class RelativePositionSystem extends AbstractSystem {
 
     public RelativePositionSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "RelativePositionSystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        RelativePositionComponent rpc = (RelativePositionComponent)_cm.getComponent(_id, "RelativePositionComponent");
-        LocationComponent thisLc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
+    public void update(int id) {
+        RelativePositionComponent rpc = (RelativePositionComponent)_cm.getComponent(id, "RelativePositionComponent");
+        LocationComponent thisLc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
         LocationComponent thatLc = (LocationComponent)_cm.getComponent(rpc.getRelativeEntityId(), "LocationComponent");
         float angle = rpc.getAngle();
         float hyp = rpc.getRadius();

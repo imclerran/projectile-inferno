@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.FirePatternComponent;
 import com.droptableteams.game.components.SpriteComponent;
@@ -14,32 +14,23 @@ import com.droptableteams.game.util.constants.DirectionBitMask;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.Directions;
 
+import java.util.HashSet;
+
 // TODO: HandleInputSystem should belong to the GameEntity, not the player
-public class HandleInputSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
+public class HandleInputSystem extends AbstractSystem {
     private EntityManager _em;
 
     public HandleInputSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "HandleInputSystem";
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
     }
 
-    @Override
-    public int getId() {
-        return _id;
-    }
 
     @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
+    public void update(int id) {
         if(_em.getEntities("PlayerEntity").size() == 0){
             return;
         }

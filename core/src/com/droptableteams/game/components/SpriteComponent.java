@@ -1,14 +1,9 @@
 package com.droptableteams.game.components;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class SpriteComponent implements IComponent {
-
-    private int _id;
-    private String _type;
+public class SpriteComponent extends AbstractComponent {
 
     private Sprite _sprite;
     private boolean _visible;
@@ -25,16 +20,6 @@ public class SpriteComponent implements IComponent {
         _sprite = sprite;
         _type = "SpriteComponent";
         _visible = visible;
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public Sprite getSprite() {

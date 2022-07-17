@@ -1,26 +1,15 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class DamageComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class DamageComponent extends AbstractComponent {
+
     private int _damage;
 
     public DamageComponent(int id, int damage) {
         _id = id;
         _damage = damage;
         _type = "DamageComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public int getDamage() {

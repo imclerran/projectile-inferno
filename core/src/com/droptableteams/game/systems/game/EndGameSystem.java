@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.builders.StaticSpriteEntityBuilder;
 import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.components.game.AssetManagerComponent;
@@ -12,9 +12,10 @@ import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class EndGameSystem implements ISystem {
-    private int _id;
-    private String _type = "EndGameSystem";
+import java.util.HashSet;
+
+public class EndGameSystem extends AbstractSystem {
+
     private boolean victory;
     private boolean defeat;
     private  boolean gameOver;
@@ -25,7 +26,9 @@ public class EndGameSystem implements ISystem {
 
 
     public EndGameSystem(int id){
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
+        _type = "EndGameSystem";
         victory = false;
         defeat = false;
         gameOver = false;
@@ -36,19 +39,9 @@ public class EndGameSystem implements ISystem {
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
+    public void update(int id) {
         if(!gameOver) {
-            SpawnListComponent slc = (SpawnListComponent) _cm.getComponent(_id, "SpawnListComponent");
+            SpawnListComponent slc = (SpawnListComponent) _cm.getComponent(id, "SpawnListComponent");
 
             if (slc.getSpawnList().size() == 0 && (_em.getEntities("EnemyEntity") == null || _em.getEntities("EnemyEntity").size() == 0)
                     && (_em.getEntities("BossEntity") == null || _em.getEntities("BossEntity").size() == 0)) {

@@ -3,13 +3,12 @@ package com.droptableteams.game.builders;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.entities.FireControlEntity;
@@ -18,7 +17,6 @@ import com.droptableteams.game.util.constants.*;
 import com.droptableteams.game.util.data.FireControlData;
 import com.droptableteams.game.util.types.FirePatternType;
 import com.droptableteams.game.util.types.SubtypeManager;
-import com.droptableteams.game.util.constants.EntityRenderOrder;
 
 import java.util.ArrayList;
 
@@ -52,17 +50,17 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public IEntity buildEntity() {
+    public AbstractEntity buildEntity() {
         checkIdNotNull();
         return new FireControlEntity(_id);
     }
 
     @Override
-    public ArrayList<IComponent> buildComponentList() {
+    public ArrayList<AbstractComponent> buildComponentList() {
         if (null == _fcd) {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         FirePatternType fpt = (FirePatternType) SubtypeManager.getInstance().getSubtype(_fcd.firePattenrType);
         if (fpt.fcTexture != "") {
             Sprite sp = new Sprite(_am.get(fpt.fcTexture, Texture.class));
@@ -86,17 +84,17 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() {
+    public ArrayList<AbstractSystem> buildSystemList() {
         checkIdNotNull();
         if (null == _fcd) {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
         FirePatternType fpt = (FirePatternType) SubtypeManager.getInstance().getSubtype(_fcd.firePattenrType);
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
 
         sl.add(new RelativePositionSystem(_id));
         if (fpt.fcDeltaRadius != 0 || fpt.fcDeltaTheta != 0) {
-            sl.add(new SpiralAroundEntitySytem(_id));
+            sl.add(new SpiralAroundEntitySystem(_id));
         }
         if (fpt.fcTexture != "") {
             sl.add(new UpdateSpriteSystem(_id));
