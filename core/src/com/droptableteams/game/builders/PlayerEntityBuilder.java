@@ -67,6 +67,7 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         cl.add(new HitboxComponent(_id, new Rectangle(x,y,12,12)));
         cl.add(new FirePatternComponent(_id, Directions.UP,0.125f, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
         cl.add(new LifeCounterComponent(_id, 5));
+        cl.add(new ShieldComponent(_id));
         return cl;
     }
 

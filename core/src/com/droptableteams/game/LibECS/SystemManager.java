@@ -14,6 +14,7 @@ public class SystemManager {
      * A private constructor for the singleton pattern.
      */
     private SystemManager() {
+        _systemsPool = new HashMap<String, AbstractSystem>();
         _evm = EventManager.getInstance();
         //_systemIdPools = new HashMap<Integer, HashMap<String, ISystem>>();
         //_systemTypePools = new HashMap<String, HashMap<Integer, ISystem>>();

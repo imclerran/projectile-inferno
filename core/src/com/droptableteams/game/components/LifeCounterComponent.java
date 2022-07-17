@@ -11,6 +11,7 @@ public class LifeCounterComponent extends AbstractComponent {
         _id = id;
         _type = _type = "LifeCounterComponent";
         _count = initialLives;
+        _isDead = false;
     }
 
     public  int getLifeCount(){
