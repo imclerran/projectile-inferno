@@ -15,7 +15,6 @@ public abstract class ISystem {
     protected Set<Integer> _idSet;
     protected String _type;
     protected ComponentManager _cm;
-    protected EntityManager _em;
 
     public Set<Integer> getIds() {
         return _idSet;
