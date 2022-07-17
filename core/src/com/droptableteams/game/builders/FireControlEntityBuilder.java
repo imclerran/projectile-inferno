@@ -3,7 +3,6 @@ package com.droptableteams.game.builders;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
@@ -18,7 +17,6 @@ import com.droptableteams.game.util.constants.*;
 import com.droptableteams.game.util.data.FireControlData;
 import com.droptableteams.game.util.types.FirePatternType;
 import com.droptableteams.game.util.types.SubtypeManager;
-import com.droptableteams.game.util.constants.EntityRenderOrder;
 
 import java.util.ArrayList;
 
@@ -96,7 +94,7 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
 
         sl.add(new RelativePositionSystem(_id));
         if (fpt.fcDeltaRadius != 0 || fpt.fcDeltaTheta != 0) {
-            sl.add(new SpiralAroundEntitySytem(_id));
+            sl.add(new SpiralAroundEntitySystem(_id));
         }
         if (fpt.fcTexture != "") {
             sl.add(new UpdateSpriteSystem(_id));
