@@ -1,8 +1,8 @@
 package com.droptableteams.game.components.game;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class GameCheatsComponent implements IComponent {
+public class GameCheatsComponent implements AbstractComponent {
     private int _id;
     private String _type;
 

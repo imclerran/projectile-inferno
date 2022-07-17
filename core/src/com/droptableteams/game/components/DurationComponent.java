@@ -1,16 +1,10 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.util.constants.Enums.DurationType;
 
-import javax.xml.datatype.Duration;
+public class DurationComponent extends AbstractComponent {
 
-public class DurationComponent implements IComponent {
-
-    private int _id;
-    private String _type;
-    // data:
     public DurationType durationType;
     public float duration;
     public float elapsedTheta;
@@ -38,15 +32,5 @@ public class DurationComponent implements IComponent {
         elapsedRadius = 0;
         elapsedTheta = 0;
         durationMet = false;
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 }

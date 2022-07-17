@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
@@ -52,12 +52,12 @@ public class BossEntityBuilder extends AbstractEntityBuilder {
         return new BossEntity(_id);
     }
 
-    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+    public ArrayList<AbstractComponent> buildComponentList() throws NullPointerException {
         checkIdNotNull();
         if (null == _bd) {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         Json json = new Json();
         //BossType bt = BossTypeFactory.make(_bd.bossType);
         BossType bt = json.fromJson(BossType.class, Gdx.files.internal("scripts/enemies/" + _bd.bossType + ".json"));

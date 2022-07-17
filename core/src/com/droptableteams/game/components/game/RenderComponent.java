@@ -1,9 +1,9 @@
 package com.droptableteams.game.components.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class RenderComponent implements IComponent {
+public class RenderComponent implements AbstractComponent {
     private int _id;
     private String _type;
     private SpriteBatch _batch;

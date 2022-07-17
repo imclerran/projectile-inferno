@@ -1,16 +1,15 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.util.TimeVector3;
 
 import java.util.ArrayList;
 
 
-public class DestinationMovementComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class DestinationMovementComponent extends AbstractComponent {
+
     private ArrayList<TimeVector3> _destinationList;
-    private int nextDest;
+    private int _nextDest;
     private long _hereSinceMillis;
     private boolean _shouldLoop;
 
@@ -18,33 +17,23 @@ public class DestinationMovementComponent implements IComponent {
     public DestinationMovementComponent(int id, ArrayList<TimeVector3> destinationList, boolean shouldLoop) {
         _id = id;
         _type = "DestinationMovementComponent";
-        nextDest = 0;
+        _nextDest = 0;
         _hereSinceMillis = -1;
         _shouldLoop = shouldLoop;
         _destinationList = destinationList;
 
     }
 
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
     public float getNextX() {
-        return _destinationList.get(nextDest).getX();
+        return _destinationList.get(_nextDest).getX();
     }
 
     public float getNextY() {
-        return _destinationList.get(nextDest).getY();
+        return _destinationList.get(_nextDest).getY();
     }
 
     public long getStayFor() {
-        return _destinationList.get(nextDest).getTime();
+        return _destinationList.get(_nextDest).getTime();
     }
 
     public long getHereFor(long currentTimeMillis) {
@@ -55,13 +44,13 @@ public class DestinationMovementComponent implements IComponent {
     }
 
     public boolean incrementNextDest() {
-        if(nextDest < _destinationList.size()-1) {
-            nextDest++;
+        if(_nextDest < _destinationList.size()-1) {
+            _nextDest++;
             return true;
         }
         else {
             if(_shouldLoop) {
-                nextDest = 0;
+                _nextDest = 0;
                 return true;
             }
         }

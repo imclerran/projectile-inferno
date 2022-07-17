@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
@@ -54,14 +54,14 @@ public class BulletEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+    public ArrayList<AbstractComponent> buildComponentList() throws NullPointerException {
         if(null == _id) {
             throw new NullPointerException("_id cannot be null. Was startBuild() called? Note: ECSEngine does this automatically.");
         }
         if(null == _bd) {
             throw new NullPointerException("Must call setBuildData() first.");
         }
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         BulletType bt = (BulletType) SubtypeManager.getInstance().getSubtype(_bd.bulletType);
         Sprite sp = new Sprite(_am.get(bt.texture, Texture.class));
         sp.setSize(bt.width,bt.height);

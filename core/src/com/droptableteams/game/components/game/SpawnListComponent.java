@@ -1,13 +1,12 @@
 package com.droptableteams.game.components.game;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.util.Spawnable;
 import com.droptableteams.game.util.Wave;
-import com.droptableteams.game.util.data.EnemyData;
 
 import java.util.ArrayList;
 
-public class SpawnListComponent implements IComponent {
+public class SpawnListComponent implements AbstractComponent {
     private int _id;
     private String _type;
     private ArrayList<Spawnable> _spawnList;

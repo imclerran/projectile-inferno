@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
@@ -54,7 +54,7 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
 
     // Not done yet. Still need to figure out all necessary components
     @Override
-    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+    public ArrayList<AbstractComponent> buildComponentList() throws NullPointerException {
         if(null == _id) {
             throw new NullPointerException("_id cannot be null. Was startBuild() called? Note: ECSEngine does this automatically.");
         }
@@ -64,7 +64,7 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
 
 
         //Below is some pseudo code to give a general idea for implementation
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         Json json = new Json();
         //PowerUpType pt = json.fromJson(PowerUpType.class, Gdx.files.internal("scripts/powerUp/" + _pd.powerUpType+ ".json"));
         Sprite sp = new Sprite(_am.get(_pd.texture, Texture.class));

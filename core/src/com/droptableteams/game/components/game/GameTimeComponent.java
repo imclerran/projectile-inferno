@@ -1,9 +1,9 @@
 package com.droptableteams.game.components.game;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.util.Utils;
 
-public class GameTimeComponent implements IComponent {
+public class GameTimeComponent implements AbstractComponent {
     private int _id;
     private String _type;
     private long _startTime;

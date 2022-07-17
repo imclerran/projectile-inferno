@@ -1,27 +1,16 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.badlogic.gdx.math.Rectangle;
 
-public class HitboxComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class HitboxComponent extends AbstractComponent {
+
     private Rectangle _hitbox;
 
     public HitboxComponent(int id, Rectangle hitbox) {
         _id = id;
         _hitbox = hitbox;
         _type = "HitboxComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public Rectangle getHitbox() {

@@ -5,7 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.game.*;
@@ -50,12 +50,12 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+    public ArrayList<AbstractComponent> buildComponentList() throws NullPointerException {
         checkIdNotNull();
         if(null == _batch) {
             throw new NullPointerException("Must call setBuildData() first.");
         }
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         cl.add(new RenderComponent(_id, _batch, EntityRenderOrder.get()));
         cl.add(new AssetManagerComponent(_id, _am));
         cl.add(new GameCheatsComponent(_id, 0.5f));

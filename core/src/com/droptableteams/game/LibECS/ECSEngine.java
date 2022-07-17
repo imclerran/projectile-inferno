@@ -1,6 +1,6 @@
 package com.droptableteams.game.LibECS;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
@@ -98,9 +98,9 @@ public class ECSEngine {
      * @param cl  a list of components to add.
      * @param sl  a list of systems to add.
      */
-    public void addEntity(IEntity e, ArrayList<IComponent> cl, ArrayList<AbstractSystem> sl) {
+    public void addEntity(IEntity e, ArrayList<AbstractComponent> cl, ArrayList<AbstractSystem> sl) {
         _em.addEntity(e);
-        for (IComponent c : cl) {
+        for (AbstractComponent c : cl) {
             _cm.addComponent(c);
         }
         for (AbstractSystem s : sl) {
@@ -116,7 +116,7 @@ public class ECSEngine {
     public IEntity addEntity(AbstractEntityBuilder builder) {
         builder.startBuild();
         IEntity entity = _em.addEntity(builder.buildEntity());
-        for (IComponent c : builder.buildComponentList()) {
+        for (AbstractComponent c : builder.buildComponentList()) {
             _cm.addComponent(c);
         }
         for (AbstractSystem s : builder.buildSystemList()) {

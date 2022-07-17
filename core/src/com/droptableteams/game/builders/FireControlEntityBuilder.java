@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
@@ -56,11 +56,11 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<IComponent> buildComponentList() {
+    public ArrayList<AbstractComponent> buildComponentList() {
         if (null == _fcd) {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
-        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         FirePatternType fpt = (FirePatternType) SubtypeManager.getInstance().getSubtype(_fcd.firePattenrType);
         if (fpt.fcTexture != "") {
             Sprite sp = new Sprite(_am.get(fpt.fcTexture, Texture.class));

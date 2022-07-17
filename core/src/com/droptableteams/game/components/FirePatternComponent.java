@@ -1,13 +1,12 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
 // TODO: consolidate fire pattern and fire control components
 // TODO: create fire pattern definitions?
 // EG: fire pattern type A, B, C ?
-public class FirePatternComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class FirePatternComponent extends AbstractComponent {
+
     private float _baseDirection;
     public float rateOfFire;
     private int _numberOfBullets;
@@ -37,16 +36,6 @@ public class FirePatternComponent implements IComponent {
         this.rateOfFire = rateOfFire;
         _bulletType = bulletType;
         _type = "FirePatternComponent";
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public float getBaseDirection() {

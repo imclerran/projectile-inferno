@@ -1,12 +1,11 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.util.data.FireControlData;
 import com.droptableteams.game.util.constants.Enums.*;
 
-public class FireControlComponent implements IComponent {
-    private int _id;
-    private String _type;
+public class FireControlComponent extends AbstractComponent {
+
     public boolean _firing;
     public long _lastFired = 0;
     public float _rateOfFire;
@@ -40,16 +39,6 @@ public class FireControlComponent implements IComponent {
         rateOfFire = fireControlData.rateOfFire;
         fireDirectionType = fireControlData.fireDirectionType;
         fireAngle = fireControlData.fireAngle;
-    }
-
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
     }
 
     public float getRateOfFire() {

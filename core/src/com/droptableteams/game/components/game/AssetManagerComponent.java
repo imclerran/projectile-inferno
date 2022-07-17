@@ -1,9 +1,9 @@
 package com.droptableteams.game.components.game;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
-public class AssetManagerComponent implements IComponent {
+public class AssetManagerComponent implements AbstractComponent {
     private int _id;
     private String _type;
     private AssetManager _am;
