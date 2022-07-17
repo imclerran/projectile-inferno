@@ -2,16 +2,15 @@ package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.DestinationMovementComponent;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.util.Utils;
 
-import java.io.Console;
 import java.util.HashSet;
 
-public class DestinationMovementSystem extends ISystem {
+public class DestinationMovementSystem extends AbstractSystem {
 
     public DestinationMovementSystem(int id) {
         _idSet = new HashSet<Integer>();

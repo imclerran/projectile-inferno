@@ -2,14 +2,14 @@ package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.components.VelocityComponent;
 
 import java.util.HashSet;
 
-public class DirectionalMovementSystem extends ISystem {
+public class DirectionalMovementSystem extends AbstractSystem {
 
     public DirectionalMovementSystem(int id) {
         _idSet = new HashSet<Integer>();

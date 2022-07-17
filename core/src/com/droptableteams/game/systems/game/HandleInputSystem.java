@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.FirePatternComponent;
 import com.droptableteams.game.components.SpriteComponent;
@@ -15,7 +15,7 @@ import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.Directions;
 
 // TODO: HandleInputSystem should belong to the GameEntity, not the player
-public class HandleInputSystem implements ISystem {
+public class HandleInputSystem implements AbstractSystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;

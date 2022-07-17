@@ -30,5 +30,5 @@ public abstract class AbstractEntityBuilder {
 
     public abstract IEntity buildEntity();
     public abstract ArrayList<IComponent> buildComponentList();
-    public abstract ArrayList<ISystem> buildSystemList();
+    public abstract ArrayList<AbstractSystem> buildSystemList();
 }

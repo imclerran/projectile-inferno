@@ -1,13 +1,13 @@
 package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.HitboxComponent;
 import com.droptableteams.game.components.LocationComponent;
 
 import java.util.HashSet;
 
-public class SetHitboxLocationSystem extends ISystem {
+public class SetHitboxLocationSystem extends AbstractSystem {
 
     public SetHitboxLocationSystem(int id) {
         _idSet = new HashSet<Integer>();

@@ -3,7 +3,7 @@ package com.droptableteams.game.systems;
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.HasBeenInboundsComponent;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
@@ -13,7 +13,7 @@ import java.util.HashSet;
 /**
  * TODO: Should be updated to to despawn when fully invisible, instead of after center-point passes boundary.
  */
-public class DespawnOutOfBoundsSystem extends ISystem {
+public class DespawnOutOfBoundsSystem extends AbstractSystem {
 
     public DespawnOutOfBoundsSystem(int id) {
         _idSet = new HashSet<Integer>();

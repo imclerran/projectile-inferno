@@ -6,7 +6,7 @@ import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.HitboxComponent;
 import com.droptableteams.game.components.OwnerComponent;
@@ -21,7 +21,7 @@ import java.util.Set;
  * TODO: find way to make collision system generic?
  * TODO: decouple damage from collision...
  */
-public class BulletCollisionSystem extends ISystem {
+public class BulletCollisionSystem extends AbstractSystem {
 
     EntityManager _em;
 

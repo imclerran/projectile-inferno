@@ -1,14 +1,13 @@
 package com.droptableteams.game.systems;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.components.SpriteComponent;
 
 import java.util.HashSet;
 
-public class RotateSpriteToDirectionSystem extends ISystem {
+public class RotateSpriteToDirectionSystem extends AbstractSystem {
 
     public RotateSpriteToDirectionSystem(int id) {
         _idSet = new HashSet<Integer>();

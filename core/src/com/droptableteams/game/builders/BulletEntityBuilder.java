@@ -1,22 +1,17 @@
 package com.droptableteams.game.builders;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Json;
-import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BulletEntity;
 import com.droptableteams.game.util.types.BulletType;
-import com.droptableteams.game.util.types.BulletTypeFactory;
 import com.droptableteams.game.util.data.BulletData;
-import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 import com.droptableteams.game.util.types.SubtypeManager;
 
@@ -84,11 +79,11 @@ public class BulletEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+    public ArrayList<AbstractSystem> buildSystemList() throws NullPointerException {
         if(null == _id) {
             throw new NullPointerException("_id cannot be null. Was startBuild() called?");
         }
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
         sl.add(new UpdateSpriteSystem(_id));
         sl.add(new DespawnOutOfBoundsSystem(_id));
         sl.add(new DirectionalMovementSystem(_id));

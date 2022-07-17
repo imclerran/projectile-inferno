@@ -9,7 +9,7 @@ import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
@@ -62,8 +62,8 @@ public class LifeDisplayBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() {
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+    public ArrayList<AbstractSystem> buildSystemList() {
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
         sl.add(new UpdateSpriteSystem(_id));
 
         return sl;

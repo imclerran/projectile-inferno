@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.game.*;
 import com.droptableteams.game.entities.GameEntity;
-import com.droptableteams.game.systems.RespawnSystem;
 import com.droptableteams.game.systems.game.*;
 import com.droptableteams.game.util.ScriptReader;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
@@ -66,9 +65,9 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+    public ArrayList<AbstractSystem> buildSystemList() throws NullPointerException {
         checkIdNotNull();
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
         sl.add(new RenderSystem(_id));
         sl.add(new HandleInputSystem(_id));
         sl.add(new SpawnerSystem(_id));

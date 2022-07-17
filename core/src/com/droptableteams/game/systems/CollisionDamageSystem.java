@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.builders.PowerUpEntityBuilder;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.components.game.AssetManagerComponent;
@@ -17,7 +17,7 @@ import com.droptableteams.game.util.data.PowerUpData;
 
 import java.util.HashSet;
 
-public class CollisionDamageSystem extends ISystem {
+public class CollisionDamageSystem extends AbstractSystem {
 
     // TODO: refactor to move the sound into a component
     private Sound _sound;

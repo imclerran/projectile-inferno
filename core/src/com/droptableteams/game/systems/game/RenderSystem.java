@@ -6,16 +6,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.game.RenderComponent;
 import com.droptableteams.game.components.SpriteComponent;
-import com.droptableteams.game.util.constants.SpecialEntityIds;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class RenderSystem implements ISystem {
+public class RenderSystem implements AbstractSystem {
     private int _id;
     private String _type;
     private EntityManager _em;

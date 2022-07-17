@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.builders.ShieldEntityBuilder;
 import com.droptableteams.game.components.HitpointComponent;
 import com.droptableteams.game.components.LifeCounterComponent;
@@ -14,7 +14,7 @@ import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class RespawnSystem extends ISystem {
+public class RespawnSystem extends AbstractSystem {
     // TODO: move shield logic and variables into separate system and components
     private int _id;
     private String _type;

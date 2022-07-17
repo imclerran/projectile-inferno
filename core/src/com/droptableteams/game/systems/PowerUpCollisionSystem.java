@@ -5,17 +5,16 @@ import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.HitboxComponent;
 import com.droptableteams.game.components.LifeCounterComponent;
-import com.droptableteams.game.components.OwnerComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 import java.util.HashSet;
 
-public class PowerUpCollisionSystem extends ISystem {
+public class PowerUpCollisionSystem extends AbstractSystem {
 
     private EntityManager _em;
     public PowerUpCollisionSystem(int id){

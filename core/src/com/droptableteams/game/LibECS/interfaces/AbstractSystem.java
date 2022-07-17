@@ -1,7 +1,6 @@
 package com.droptableteams.game.LibECS.interfaces;
 
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.EntityManager;
 
 import java.util.Set;
 
@@ -10,7 +9,7 @@ import java.util.Set;
  * <p>
  * Systems are used to store handle the logic and behavior of entities.</p>
  */
-public abstract class ISystem {
+public abstract class AbstractSystem {
 
     protected Set<Integer> _idSet;
     protected String _type;

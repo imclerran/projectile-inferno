@@ -2,7 +2,7 @@ package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.DurationComponent;
 import com.droptableteams.game.components.RelativePositionComponent;
 import com.droptableteams.game.components.SpiralComponent;
@@ -11,7 +11,7 @@ import com.droptableteams.game.util.constants.SpecialEntityIds;
 
 import java.util.HashSet;
 
-public class SpiralAroundEntitySystem extends ISystem {
+public class SpiralAroundEntitySystem extends AbstractSystem {
 
     public SpiralAroundEntitySystem(int id) {
         _idSet = new HashSet<Integer>();

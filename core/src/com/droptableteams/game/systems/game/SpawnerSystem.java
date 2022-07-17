@@ -2,23 +2,20 @@ package com.droptableteams.game.systems.game;
 
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.builders.BossEntityBuilder;
 import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.builders.EnemyEntityBuilder;
-import com.droptableteams.game.builders.BossEntityBuilder;
-import com.droptableteams.game.util.Wave;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.data.BossData;
 import com.droptableteams.game.util.data.EnemyData;
-import com.droptableteams.game.util.data.BossData;
 import com.droptableteams.game.util.Spawnable;
 
 import java.util.ArrayList;
 
-public class SpawnerSystem implements ISystem {
+public class SpawnerSystem implements AbstractSystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;

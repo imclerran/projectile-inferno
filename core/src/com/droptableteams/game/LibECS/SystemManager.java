@@ -1,14 +1,13 @@
 package com.droptableteams.game.LibECS;
 
-import com.droptableteams.game.LibECS.EventManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 
 import java.util.*;
 
 public class SystemManager {
     private static SystemManager _sm;
     private EventManager _evm;
-    private HashMap<String, ISystem> _systemsPool;
+    private HashMap<String, AbstractSystem> _systemsPool;
 
 
     /**
@@ -39,7 +38,7 @@ public class SystemManager {
      * @param s  the system to add.
      * @return  the added system.
      */
-    public ISystem addSystem(ISystem s, int id) {
+    public AbstractSystem addSystem(AbstractSystem s, int id) {
         String type = s.getType();
         if(!_systemsPool.containsKey(type)) {
             _systemsPool.put(type, s);
@@ -58,7 +57,7 @@ public class SystemManager {
      */
     public boolean removeSystems(int id) {
         ArrayList<String> flaggedForRemoval = new ArrayList<String>();
-        for(Map.Entry<String, ISystem> e : _systemsPool.entrySet()) {
+        for(Map.Entry<String, AbstractSystem> e : _systemsPool.entrySet()) {
             if(e.getValue().isUsedBy(id)) {
                 flaggedForRemoval.add(e.getKey());
             }

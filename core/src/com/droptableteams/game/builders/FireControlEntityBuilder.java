@@ -8,7 +8,7 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.entities.FireControlEntity;
@@ -84,13 +84,13 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public ArrayList<ISystem> buildSystemList() {
+    public ArrayList<AbstractSystem> buildSystemList() {
         checkIdNotNull();
         if (null == _fcd) {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
         FirePatternType fpt = (FirePatternType) SubtypeManager.getInstance().getSubtype(_fcd.firePattenrType);
-        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
 
         sl.add(new RelativePositionSystem(_id));
         if (fpt.fcDeltaRadius != 0 || fpt.fcDeltaTheta != 0) {

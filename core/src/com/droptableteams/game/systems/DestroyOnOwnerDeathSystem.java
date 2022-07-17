@@ -1,14 +1,14 @@
 package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.OwnerComponent;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class DestroyOnOwnerDeathSystem extends ISystem {
+public class DestroyOnOwnerDeathSystem extends AbstractSystem {
 
     public DestroyOnOwnerDeathSystem(int id) {
         _idSet = new HashSet<Integer>();

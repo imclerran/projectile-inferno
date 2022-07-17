@@ -4,18 +4,15 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.builders.LifeDisplayBuilder;
 import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.components.game.AssetManagerComponent;
-import com.droptableteams.game.entities.LifeDisplayEntity;
-import com.droptableteams.game.entities.PlayerEntity;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class LifeUpdateSystem implements ISystem {
+public class LifeUpdateSystem implements AbstractSystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;

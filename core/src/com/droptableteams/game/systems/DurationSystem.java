@@ -1,16 +1,14 @@
 package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.DurationComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
-import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 import java.util.HashSet;
 
-public class DurationSystem extends ISystem {
+public class DurationSystem extends AbstractSystem {
 
     public DurationSystem(int id) {
         _idSet = new HashSet<Integer>();

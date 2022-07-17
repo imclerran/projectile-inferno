@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.builders.StaticSpriteEntityBuilder;
 import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.components.game.AssetManagerComponent;
@@ -12,7 +12,7 @@ import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class EndGameSystem implements ISystem {
+public class EndGameSystem implements AbstractSystem {
     private int _id;
     private String _type = "EndGameSystem";
     private boolean victory;

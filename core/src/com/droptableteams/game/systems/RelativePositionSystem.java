@@ -1,13 +1,13 @@
 package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.RelativePositionComponent;
 
 import java.util.HashSet;
 
-public class RelativePositionSystem extends ISystem {
+public class RelativePositionSystem extends AbstractSystem {
 
     public RelativePositionSystem(int id) {
         _idSet = new HashSet<Integer>();

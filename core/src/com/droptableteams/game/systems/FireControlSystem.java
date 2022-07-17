@@ -2,17 +2,14 @@ package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameCheatsComponent;
-import com.droptableteams.game.util.constants.Enums;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.types.BulletType;
-import com.droptableteams.game.util.types.BulletTypeFactory;
 import com.droptableteams.game.util.data.BulletData;
 import com.droptableteams.game.builders.BulletEntityBuilder;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
@@ -20,7 +17,7 @@ import com.droptableteams.game.util.types.SubtypeManager;
 
 import java.util.HashSet;
 
-public class FireControlSystem extends ISystem {
+public class FireControlSystem extends AbstractSystem {
 
     // TODO: move _sound into a component
     private Sound _sound;

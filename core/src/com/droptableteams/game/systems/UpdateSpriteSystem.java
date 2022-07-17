@@ -1,14 +1,14 @@
 package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SpriteComponent;
 import com.droptableteams.game.components.SizeComponent;
 
 import java.util.HashSet;
 
-public class UpdateSpriteSystem extends ISystem {
+public class UpdateSpriteSystem extends AbstractSystem {
 
     public UpdateSpriteSystem(int id) {
         _idSet = new HashSet<Integer>();
