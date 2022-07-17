@@ -8,7 +8,7 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SizeComponent;
@@ -34,7 +34,7 @@ public class LifeDisplayBuilder extends AbstractEntityBuilder {
         _id = null;
     }
     @Override
-    public IEntity buildEntity() {
+    public AbstractEntity buildEntity() {
         checkIdNotNull();
         return new LifeDisplayEntity(_id);
     }

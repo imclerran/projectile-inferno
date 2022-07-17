@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.EnemyEntity;
@@ -46,7 +46,7 @@ public class EnemyEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
-    public IEntity buildEntity() throws NullPointerException {
+    public AbstractEntity buildEntity() throws NullPointerException {
         checkIdNotNull();
         return new EnemyEntity(_id);
     }

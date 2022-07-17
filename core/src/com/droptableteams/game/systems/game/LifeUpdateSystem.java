@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.builders.LifeDisplayBuilder;
 import com.droptableteams.game.components.LifeCounterComponent;
@@ -51,7 +51,7 @@ public class LifeUpdateSystem implements AbstractSystem {
 
     private int FindHighestLifeID() {
         int max = 0;
-        for(IEntity x : _em.getEntities("LifeDisplayEntity").values()){
+        for(AbstractEntity x : _em.getEntities("LifeDisplayEntity").values()){
             if(x.getId() > max){
                 max = x.getId();
             }

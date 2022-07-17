@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.HitboxComponent;
@@ -56,8 +56,8 @@ public class BulletCollisionSystem extends AbstractSystem {
             }
         }
         else { // bullet is a player bullet
-            Set<Map.Entry<Integer, IEntity>> entries = _em.getEntities("EnemyEntity").entrySet();
-            for (Map.Entry<Integer, IEntity> e : entries) {
+            Set<Map.Entry<Integer, AbstractEntity>> entries = _em.getEntities("EnemyEntity").entrySet();
+            for (Map.Entry<Integer, AbstractEntity> e : entries) {
                 int enemyId = e.getKey();
 
                 HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");
@@ -68,8 +68,8 @@ public class BulletCollisionSystem extends AbstractSystem {
                 }
             }
 
-            Set<Map.Entry<Integer, IEntity>> entries2 = _em.getEntities("BossEntity").entrySet();
-            for (Map.Entry<Integer, IEntity> e : entries2) {
+            Set<Map.Entry<Integer, AbstractEntity>> entries2 = _em.getEntities("BossEntity").entrySet();
+            for (Map.Entry<Integer, AbstractEntity> e : entries2) {
                 int enemyId = e.getKey();
 
                 HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");

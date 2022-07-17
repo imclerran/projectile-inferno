@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SizeComponent;
@@ -43,7 +43,7 @@ public class StaticSpriteEntityBuilder extends AbstractEntityBuilder {
         sprite_data = null;
     }
     @Override
-    public IEntity buildEntity() {
+    public AbstractEntity buildEntity() {
         checkIdNotNull();
 
         return new StaticSpriteEntity(_id);

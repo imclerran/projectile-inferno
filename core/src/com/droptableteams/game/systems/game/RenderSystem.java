@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.EntityManager;
-import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.game.RenderComponent;
 import com.droptableteams.game.components.SpriteComponent;
@@ -45,10 +45,10 @@ public class RenderSystem implements AbstractSystem {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         for(String type : rc.getEntityRenderOrder()) {
-            HashMap<Integer, IEntity> entityMap = _em.getEntities(type);
+            HashMap<Integer, AbstractEntity> entityMap = _em.getEntities(type);
             if(null != entityMap) {
-                Set<Map.Entry<Integer,IEntity>> entities = entityMap.entrySet();
-                for(Map.Entry<Integer,IEntity> e : entities) {
+                Set<Map.Entry<Integer, AbstractEntity>> entities = entityMap.entrySet();
+                for(Map.Entry<Integer, AbstractEntity> e : entities) {
                     int id = e.getValue().getId();
                     SpriteComponent sp = (SpriteComponent)_cm.getComponent(id, "SpriteComponent");
                     if(sp.isVisible()) {
