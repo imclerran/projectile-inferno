@@ -5,31 +5,21 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.HitboxComponent;
 import com.droptableteams.game.components.LocationComponent;
 
-public class SetHitboxLocationSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
+import java.util.HashSet;
+
+public class SetHitboxLocationSystem extends ISystem {
 
     public SetHitboxLocationSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "SetHitboxLocationSystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
-        HitboxComponent hc = (HitboxComponent)_cm.getComponent(_id, "HitboxComponent");
+    public void update(int id) {
+        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
+        HitboxComponent hc = (HitboxComponent)_cm.getComponent(id, "HitboxComponent");
         hc.getHitbox().setCenter(lc.getX(), lc.getY());
     }
 }

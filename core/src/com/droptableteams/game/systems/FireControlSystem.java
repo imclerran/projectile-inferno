@@ -18,34 +18,26 @@ import com.droptableteams.game.builders.BulletEntityBuilder;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.types.SubtypeManager;
 
-public class FireControlSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
+import java.util.HashSet;
+
+public class FireControlSystem extends ISystem {
+
+    // TODO: move _sound into a component
     private Sound _sound;
 
     public FireControlSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "FireControlSystem";
         _cm = ComponentManager.getInstance();
         _sound = Gdx.audio.newSound(Gdx.files.internal("audio/laser_sound.mp3"));
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        LocationComponent lc = (LocationComponent)ComponentManager.getInstance().getComponent(_id, "LocationComponent");
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+    public void update(int id) {
+        LocationComponent lc = (LocationComponent)ComponentManager.getInstance().getComponent(id, "LocationComponent");
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(id, "FireControlComponent");
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(id, "FirePatternComponent");
         AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         LocationComponent plc = (LocationComponent)ComponentManager.getInstance().getComponent(SpecialEntityIds.PLAYER_ENTITY, "LocationComponent");
@@ -74,16 +66,16 @@ public class FireControlSystem implements ISystem {
             if((float)(deltaTime/Math.pow(10,9)) > fpc.rateOfFire) {
 
                 // playing the laser sound effect
-                if(_id == SpecialEntityIds.PLAYER_ENTITY) {
+                if(id == SpecialEntityIds.PLAYER_ENTITY) {
                     _sound.play(1.0f);
                 }
-                spawnBullets(fpc, amc, lc.getX(), lc.getY());
+                spawnBullets(fpc, amc, lc.getX(), lc.getY(), id);
                 fcc.setLastFired(time);
             }
         }
     }
 
-    private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y) {
+    private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y, int id) {
         BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         BulletType bt = (BulletType)SubtypeManager.getInstance().getSubtype(fpc.getBulletType());
@@ -97,7 +89,7 @@ public class FireControlSystem implements ISystem {
         }
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
-            BulletData bd = new BulletData(direction, 0, x, y, _id, bt.subtype);
+            BulletData bd = new BulletData(direction, 0, x, y, id, bt.subtype);
             builder.setBuildData(bd);
             engine.addEntity(builder);
             offset += angle;

@@ -8,29 +8,20 @@ import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class DurationSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
+import java.util.HashSet;
+
+public class DurationSystem extends ISystem {
 
     public DurationSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "DurationSystem";
         _cm = ComponentManager.getInstance();
     }
-    @Override
-    public int getId() {
-        return _id;
-    }
 
     @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        DurationComponent dc = (DurationComponent)_cm.getComponent(_id, "DurationComponent");
+    public void update(int id) {
+        DurationComponent dc = (DurationComponent)_cm.getComponent(id, "DurationComponent");
 
         switch (dc.durationType) {
             case TIME:

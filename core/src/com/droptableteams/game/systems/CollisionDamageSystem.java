@@ -21,6 +21,7 @@ public class CollisionDamageSystem extends ISystem {
 
     // TODO: refactor to move the sound into a component
     private Sound _sound;
+    private EntityManager _em;
     private AssetManager _am;
 
     public CollisionDamageSystem(int id) {

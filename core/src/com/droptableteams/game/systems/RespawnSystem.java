@@ -14,7 +14,8 @@ import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class RespawnSystem implements ISystem {
+public class RespawnSystem extends ISystem {
+    // TODO: move shield logic and variables into separate system and components
     private int _id;
     private String _type;
     private ComponentManager _cm;
@@ -32,20 +33,8 @@ public class RespawnSystem implements ISystem {
         shieldStartTime = 0;
     }
 
-
-
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return "RespawnSystem";
-    }
-
-    @Override
-    public void update() {
+    public void update(int id) {
         LifeCounterComponent lifeComp = (LifeCounterComponent) _cm.getComponent(_id, "LifeCounterComponent");
         HitpointComponent hc = (HitpointComponent) _cm.getComponent(_id, "HitpointComponent");
         if(isShielded && gtc.getTimeInMillis() >= shieldStartTime+1500){

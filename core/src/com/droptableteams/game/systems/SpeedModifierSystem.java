@@ -6,31 +6,21 @@ import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 
-public class SpeedModifierSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
+import java.util.HashSet;
+
+public class SpeedModifierSystem extends ISystem {
 
     public SpeedModifierSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _cm = ComponentManager.getInstance();
         _type = "SpeedModifierSystem";
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
+    public void update(int id) {
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id,"VelocityComponent");
+        VelocityComponent vc = (VelocityComponent)_cm.getComponent(id,"VelocityComponent");
         vc.setModifiedSpeed(vc.getBaseSpeed() * gcc.getSpeedMultiplier());
     }
 }

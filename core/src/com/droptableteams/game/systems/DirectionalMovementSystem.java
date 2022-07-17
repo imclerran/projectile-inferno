@@ -7,32 +7,22 @@ import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.components.VelocityComponent;
 
-public class DirectionalMovementSystem implements ISystem {
-    private int _id;
-    private String _type;
-    ComponentManager _cm;
+import java.util.HashSet;
+
+public class DirectionalMovementSystem extends ISystem {
 
     public DirectionalMovementSystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "DirectionalMovementSystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
-        MoveDirectionComponent mdc = (MoveDirectionComponent) _cm.getComponent(_id, "MoveDirectionComponent");
-        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
+    public void update(int id) {
+        VelocityComponent vc = (VelocityComponent)_cm.getComponent(id, "VelocityComponent");
+        MoveDirectionComponent mdc = (MoveDirectionComponent) _cm.getComponent(id, "MoveDirectionComponent");
+        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
         float newDx = 0;
         float newDy = 0;
         Float angle = mdc.getRadians();

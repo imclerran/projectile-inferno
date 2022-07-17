@@ -5,30 +5,20 @@ import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.LocationComponent;
 
-public class StopAtBoundarySystem implements ISystem {
-    private int _id;
-    private String _type;
-    ComponentManager _cm;
+import java.util.HashSet;
+
+public class StopAtBoundarySystem extends ISystem {
 
     public StopAtBoundarySystem(int id) {
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "StopAtBoundarySystem";
         _cm = ComponentManager.getInstance();
     }
 
     @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
-    @Override
-    public void update() {
-        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
+    public void update(int id) {
+        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
         float leftBound = 0;
         float rightBound = Gdx.graphics.getWidth();
         float bottomBound = 0;

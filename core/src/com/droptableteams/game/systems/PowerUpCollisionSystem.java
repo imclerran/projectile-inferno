@@ -13,47 +13,33 @@ import com.droptableteams.game.components.OwnerComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-public class PowerUpCollisionSystem implements ISystem {
-    private int _id;
-    private String _type;
-    private ComponentManager _cm;
-    private EntityManager _em;
+import java.util.HashSet;
 
+public class PowerUpCollisionSystem extends ISystem {
+
+    private EntityManager _em;
     public PowerUpCollisionSystem(int id){
-        _id = id;
+        _idSet = new HashSet<Integer>();
+        _idSet.add(id);
         _type = "PowerUpCollisionSystem";
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
     }
 
-    @Override
-    public int getId() {
-        return _id;
-    }
-
-    @Override
-    public String getType() {
-        return _type;
-    }
-
     // Copied from bullet collision system. Needs to be restructured in order to
     // work with power ups
     @Override
-    public void update() {
-        //OwnerComponent oc = (OwnerComponent)_cm.getComponent(_id, "OwnerComponent");
-        HitboxComponent thisHbc = (HitboxComponent)_cm.getComponent(_id, "HitboxComponent");
+    public void update(int id) {
+        HitboxComponent thisHbc = (HitboxComponent)_cm.getComponent(id, "HitboxComponent");
         Rectangle intersection = new Rectangle();
 
+        HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
+        CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "CollisionsComponent");
+        if(Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+            cc.addCollision(id);
+            ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).incrementLife();
 
-            HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
-            CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "CollisionsComponent");
-            if(Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
-                cc.addCollision(_id);
-                ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).incrementLife();
-
-                ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
-            }
-
-
+            ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+        }
     }
 }

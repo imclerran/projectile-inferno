@@ -23,6 +23,8 @@ import java.util.Set;
  */
 public class BulletCollisionSystem extends ISystem {
 
+    EntityManager _em;
+
     public BulletCollisionSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
