@@ -10,6 +10,7 @@ import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.HitboxComponent;
 import com.droptableteams.game.components.OwnerComponent;
+import com.droptableteams.game.components.FriendFoeComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
@@ -33,59 +34,85 @@ public class BulletCollisionSystem extends AbstractSystem {
         _em = EntityManager.getInstance();
     }
 
-    // TODO: simplify collision logic
-    // -> collision iterates through all hitbox components?
-    // -> handle bullet/bullet collisions?
-    // -> add IFF (identify friend foe) component
-    // -> colide when iff(this) != iff(that)
-
     @Override
     public void update(int id) {
-        OwnerComponent oc = (OwnerComponent) _cm.getComponent(id, "OwnerComponent");
-        HitboxComponent thisHbc = (HitboxComponent) _cm.getComponent(id, "HitboxComponent");
-        Rectangle intersection = new Rectangle();
+        // TODO: Test update2, and replace the current update method with update2
+        update2(int id); 
+        // OwnerComponent oc = (OwnerComponent) _cm.getComponent(id, "OwnerComponent");
+        // HitboxComponent thisHbc = (HitboxComponent) _cm.getComponent(id, "HitboxComponent");
+        // Rectangle intersection = new Rectangle();
 
-        if (oc.getOwnerId() != SpecialEntityIds.PLAYER_ENTITY) { // bullet is an enemey bullet
-            if (_em.getEntities("PlayerEntity").size() == 0) {
-                return; // If there is no player entity, return.
-            }
-            HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
-            HitboxComponent shieldHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.SHIELD_ENTITY, "HitboxComponent");
-            CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "CollisionsComponent");
-            if (shieldHbc != null && Intersector.intersectRectangles(thisHbc.getHitbox(), shieldHbc.getHitbox(), intersection)) {
-                ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
-            } else {
+        // if (oc.getOwnerId() != SpecialEntityIds.PLAYER_ENTITY) { // bullet is an enemey bullet
+        //     if (_em.getEntities("PlayerEntity").size() == 0) {
+        //         return; // If there is no player entity, return.
+        //     }
+        //     HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
+        //     HitboxComponent shieldHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.SHIELD_ENTITY, "HitboxComponent");
+        //     CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "CollisionsComponent");
+        //     if (shieldHbc != null && Intersector.intersectRectangles(thisHbc.getHitbox(), shieldHbc.getHitbox(), intersection)) {
+        //         ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+        //     } else {
+        //         if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+        //             cc.addCollision(id);
+        //             ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+        //         }
+        //     }
+        // }
+        // else { // bullet is a player bullet
+        //     Set<Map.Entry<Integer, AbstractEntity>> entries = _em.getEntities("EnemyEntity").entrySet();
+        //     for (Map.Entry<Integer, AbstractEntity> e : entries) {
+        //         int enemyId = e.getKey();
+
+        //         HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");
+        //         CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(enemyId, "CollisionsComponent");
+        //         if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+        //             cc.addCollision(id);
+        //             ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+        //         }
+        //     }
+
+        //     Set<Map.Entry<Integer, AbstractEntity>> entries2 = _em.getEntities("BossEntity").entrySet();
+        //     for (Map.Entry<Integer, AbstractEntity> e : entries2) {
+        //         int enemyId = e.getKey();
+
+        //         HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");
+        //         CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(enemyId, "CollisionsComponent");
+        //         if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+        //             cc.addCollision(id);
+        //             ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+        //         }
+        //     }
+        // }
+    }
+
+    /*
+     * Future replacement for update(int id)
+     * 
+     * @param id  the id of the entity being updated.
+     */
+    private void update2(int id) {
+        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        // get all targetable entity components
+        Map<Integer, AbstractComponent> tecMap = _cm.getComponents("TargetableEntityComponent");
+        // for each targetable entity component, check friendfoe component
+        for (Map.Entry<Integer,AbstractComponent> e : tecMap) {
+            int targetId = e.getKey();
+            FriendFoeComponent thisFfc = (FriendFoeComponent)_cm.getComponent(id, "FriendFoeComponent");
+            FriendFoeComponent thatFfc = (FriendFoeComponent)_cm.getComponent(targetId, "FriendFoeComponent");
+            if (!thatFfc.isFriendly(thisFfc.getTeam())) {
+                // if not friendly, check hitbox intersection
+                HitboxComponent thisHbc = (HitboxComponent) _cm.getComponent(id, "HitboxComponent");
+                HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(targetId, "HitboxComponent");
+                // assign collisions as appropriate
                 if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
-                    cc.addCollision(id);
-                    ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+                    CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(targetId, "CollisionsComponent");
+                    cc.addCollision(id); // add bullet id to target's collision list
+                    ECSEngine.flagEntityForRemoval(id); // destroy bullet after collision
+                    // TODO: dispatch event instead?
                 }
+                
             }
         }
-        else { // bullet is a player bullet
-            Set<Map.Entry<Integer, AbstractEntity>> entries = _em.getEntities("EnemyEntity").entrySet();
-            for (Map.Entry<Integer, AbstractEntity> e : entries) {
-                int enemyId = e.getKey();
-
-                HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");
-                CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(enemyId, "CollisionsComponent");
-                if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
-                    cc.addCollision(id);
-                    ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
-                }
-            }
-
-            Set<Map.Entry<Integer, AbstractEntity>> entries2 = _em.getEntities("BossEntity").entrySet();
-            for (Map.Entry<Integer, AbstractEntity> e : entries2) {
-                int enemyId = e.getKey();
-
-                HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");
-                CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(enemyId, "CollisionsComponent");
-                if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
-                    cc.addCollision(id);
-                    ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
-                }
-            }
-        }
+        
     }
 }
-
