@@ -33,6 +33,12 @@ public class BulletCollisionSystem extends AbstractSystem {
         _em = EntityManager.getInstance();
     }
 
+    // TODO: simplify collision logic
+    // -> collision iterates through all hitbox components?
+    // -> handle bullet/bullet collisions?
+    // -> add IFF (identify friend foe) component
+    // -> colide when iff(this) != iff(that)
+
     @Override
     public void update(int id) {
         OwnerComponent oc = (OwnerComponent) _cm.getComponent(id, "OwnerComponent");

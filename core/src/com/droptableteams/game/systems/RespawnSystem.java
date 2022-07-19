@@ -28,6 +28,10 @@ public class RespawnSystem extends AbstractSystem {
         _em = EntityManager.getInstance();
     }
 
+    // TODO: decouple shield from respawn system -> move shield into it's own entity
+    // -> in progress: entity already exists
+    // -> TODO: begin using shield entity and remove shielding logic from respawn system
+
     @Override
     public void update(int id) {
         GameTimeComponent gtc = (GameTimeComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent");
