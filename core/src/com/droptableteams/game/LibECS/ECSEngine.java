@@ -25,6 +25,10 @@ public class ECSEngine {
     private String[] _systemUpdateOrder;
     private ArrayList<Integer> _flaggedForRemoval;
 
+    // TODO: rework ECSEngine to allow more elegant access:
+    // -> Either: eliminate the singleton pattern,
+    // -> or: modify getInstance() to require no arguments
+
     /**
      * A private constructor for the singleton pattern.
      *
