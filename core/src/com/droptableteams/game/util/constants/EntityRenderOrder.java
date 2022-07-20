@@ -15,6 +15,7 @@ public class EntityRenderOrder {
             "PowerUpEntity"
     };
 
+    // TODO: #7 make ENTITY_RENDER_ORDER public and remove get() method
     public static String[] get() {
         return ENTITY_RENDER_ORDER;
     }
