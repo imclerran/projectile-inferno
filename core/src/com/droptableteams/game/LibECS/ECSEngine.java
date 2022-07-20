@@ -75,6 +75,19 @@ public class ECSEngine {
         return _engine;
     }
 
+    /*
+     * Gets an instance of ECSEngine, only when ECSEngine is already initialized.
+     * <p> NOTE: ECSEngine should always be initialized by calling {@link #getInstance(String[]) getInstance} first.
+     *
+     * @return  the pre-initialized instance of ECSEngine singleton
+     */
+    public static ECSEngine get() throws Exception {
+        if (null == _engine) {
+            throw new NullPointerException("ECSEngine must be initialized with getInstance(String[] systemUpdateOrder)");
+        }
+        return _engine;
+    }
+
     /**
      * Getters for manager classes.
      */
