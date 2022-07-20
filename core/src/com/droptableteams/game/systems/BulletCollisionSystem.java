@@ -20,7 +20,6 @@ import java.util.Set;
 
 /**
  * TODO: find way to make collision system generic?
- * TODO: decouple damage from collision...
  */
 public class BulletCollisionSystem extends AbstractSystem {
 
