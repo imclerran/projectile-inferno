@@ -30,7 +30,7 @@ public class CollisionDamageSystem extends AbstractSystem {
         _type = "CollisionDamageSystem";
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
-        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/damage_sound_effect.mp3"));
+        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/damage_sound_effect.mp3")); // accessing sound w/o asset manager? -> see todo above
         _am = ((AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
     }
 
@@ -43,7 +43,7 @@ public class CollisionDamageSystem extends AbstractSystem {
     public void update(int id) {
         CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(id, "CollisionsComponent");
         HitpointComponent hc = (HitpointComponent)_cm.getComponent(id, "HitpointComponent");
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        ECSEngine engine = ECSEngine.get();
 
         for(int thatId : cc.getCollisions()) {
 

@@ -41,7 +41,7 @@ public class DespawnOutOfBoundsSystem extends AbstractSystem {
         }
         else {
             if((leftBound > x ||  x > rightBound) || (bottomBound > y || y > topBound)) {
-                ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+                ECSEngine.get().flagEntityForRemoval(id);
             }
         }
     }

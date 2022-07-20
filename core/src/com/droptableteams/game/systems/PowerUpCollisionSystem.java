@@ -38,7 +38,7 @@ public class PowerUpCollisionSystem extends AbstractSystem {
             cc.addCollision(id);
             ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).incrementLife();
 
-            ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+            ECSEngine.get().flagEntityForRemoval(id);
         }
     }
 }

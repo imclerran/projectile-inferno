@@ -31,7 +31,6 @@ public class SpawnerSystem extends AbstractSystem {
         SpawnListComponent slc = (SpawnListComponent) _cm.getComponent(id, "SpawnListComponent");
         GameTimeComponent gtc = (GameTimeComponent) _cm.getComponent(id, "GameTimeComponent");
         AssetManagerComponent amc = (AssetManagerComponent) _cm.getComponent(id, "AssetManagerComponent");
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         EnemyEntityBuilder enemyBuilder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
         BossEntityBuilder bossBuilder = BossEntityBuilder.getInstance(amc.getAssetManager());
         ArrayList<Spawnable> flaggedForRemoval = new ArrayList<Spawnable>();
@@ -42,13 +41,13 @@ public class SpawnerSystem extends AbstractSystem {
                 if (spawnable.entityType.equals("BossEntity")) {
                     flaggedForRemoval.add(spawnable);
                     bossBuilder.setBuildData((BossData) spawnable.data);
-                    engine.addEntity(bossBuilder);
+                    ECSEngine.get().addEntity(bossBuilder);
                 }
                 else if(spawnable.entityType.equals("EnemyEntity"))
                 {
                     flaggedForRemoval.add(spawnable);
                     enemyBuilder.setBuildData((EnemyData) spawnable.data);
-                    engine.addEntity(enemyBuilder);
+                    ECSEngine.get().addEntity(enemyBuilder);
                 }
             }
         }

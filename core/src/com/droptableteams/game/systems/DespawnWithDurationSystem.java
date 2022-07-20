@@ -21,7 +21,7 @@ public class DespawnWithDurationSystem extends AbstractSystem {
     public void update(int id) {
         DurationComponent dc =  (DurationComponent)_cm.getComponent(id, "DurationComponent");
         if(dc.durationMet) {
-            ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(id);
+            ECSEngine.get().flagEntityForRemoval(id);
         }
     }
 }

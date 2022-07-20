@@ -39,7 +39,7 @@ public class RespawnSystem extends AbstractSystem {
         ShieldComponent sc = (ShieldComponent) _cm.getComponent(id, "ShieldComponent");
         HitpointComponent hpc = (HitpointComponent) _cm.getComponent(id, "HitpointComponent");
         if(sc.isShielded() && gtc.getTimeInMillis() >= sc.getShieldStartTime()+1500) {
-            ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(SpecialEntityIds.SHIELD_ENTITY);
+            ECSEngine.get().flagEntityForRemoval(SpecialEntityIds.SHIELD_ENTITY);
             sc.setShielded(false);
         }else {
             if (lcc.getIsDead()) {
@@ -60,7 +60,7 @@ public class RespawnSystem extends AbstractSystem {
         AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
         ShieldComponent sc = (ShieldComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "ShieldComponent");
         sc.setShieldStartTime(gtc.getTimeInMillis());
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        ECSEngine engine = ECSEngine.get();
         ShieldEntityBuilder builder = ShieldEntityBuilder.getInstance(amc.getAssetManager());
         engine.addEntity(builder);
     }

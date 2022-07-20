@@ -18,7 +18,7 @@ public class DestroyOnOwnerDeathSystem extends AbstractSystem {
 
     @Override
     public void update(int id) {
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        ECSEngine engine = ECSEngine.get();
         OwnerComponent oc = (OwnerComponent)engine.getComponentManager().getComponent(id, "OwnerComponenet");
         ArrayList<Integer> flagged = engine.getFlaggedForRemoval();
         for(int i = 0; i < flagged.size(); i++) {

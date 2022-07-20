@@ -91,7 +91,6 @@ public class BulletCollisionSystem extends AbstractSystem {
      * @param id  the id of the entity being updated.
      */
     private void update2(int id) {
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         // get all targetable entity components
         Map<Integer, AbstractComponent> tecMap = _cm.getComponents("TargetableEntityComponent");
         // for each targetable entity component, check friendfoe component
@@ -107,7 +106,7 @@ public class BulletCollisionSystem extends AbstractSystem {
                 if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
                     CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(targetId, "CollisionsComponent");
                     cc.addCollision(id); // add bullet id to target's collision list
-                    ECSEngine.flagEntityForRemoval(id); // destroy bullet after collision
+                    ECSEngine.get().flagEntityForRemoval(id); // destroy bullet after collision
                     // TODO: dispatch event instead?
                 }
                 

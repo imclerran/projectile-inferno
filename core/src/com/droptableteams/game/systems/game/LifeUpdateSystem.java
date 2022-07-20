@@ -14,6 +14,7 @@ import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 import java.util.HashSet;
 
+// TODO: consider making this a normal system? (not game system)
 public class LifeUpdateSystem extends AbstractSystem {
     private EntityManager _em;
 
@@ -29,13 +30,12 @@ public class LifeUpdateSystem extends AbstractSystem {
     public void update(int id) {
         AssetManager am = ((AssetManagerComponent) _cm.getComponent(id, "AssetManagerComponent")).getAssetManager();
         LifeCounterComponent counter =(LifeCounterComponent) _cm.getComponents("LifeCounterComponent").get(SpecialEntityIds.PLAYER_ENTITY);
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         if(counter != null  && _em.getEntities("LifeDisplayEntity") != null &&_em.getEntities("LifeDisplayEntity").size() > counter.getLifeCount()){
             int currentLife = FindHighestLifeID();
-            engine.flagEntityForRemoval(currentLife);
+            ECSEngine.get().flagEntityForRemoval(currentLife);
         }
         while(counter != null &&  _em.getEntities("LifeDisplayEntity")!= null && _em.getEntities("LifeDisplayEntity").size() < counter.getLifeCount()) {
-            engine.addEntity(LifeDisplayBuilder.getInstance(am));
+            ECSEngine.get().addEntity(LifeDisplayBuilder.getInstance(am));
         }
     }
 
