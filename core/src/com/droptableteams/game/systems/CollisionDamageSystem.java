@@ -21,14 +21,14 @@ public class CollisionDamageSystem extends AbstractSystem {
 
     // TODO: #3 refactor to move the sound into a component
     private Sound _sound;
-    private EntityManager _em;
+    private EntityManager _em; // TODO: #8 Remove all manager fields from System classes (including component manager in AbstractSystem)
     private AssetManager _am;
 
     public CollisionDamageSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "CollisionDamageSystem";
-        _cm = ComponentManager.getInstance();
+        _cm = ComponentManager.getInstance(); 
         _em = EntityManager.getInstance();
         _sound = Gdx.audio.newSound(Gdx.files.internal("audio/damage_sound_effect.mp3")); // accessing sound w/o asset manager? -> see todo above
         _am = ((AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
