@@ -65,6 +65,8 @@ public class EndGameSystem extends AbstractSystem {
 
     }
     private void displayDefeat(){
+        ComponentManager cm = ComponentManager.getInstance();
+        AssetManager am = ((AssetManagerComponent)cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
         StaticSpriteEntityBuilder.getInstance(am).setBuildData("sprites/defeat.png");
         ECSEngine.get().addEntity(StaticSpriteEntityBuilder.getInstance(am));
         StaticSpriteEntityBuilder.getInstance(am).finishBuild();
