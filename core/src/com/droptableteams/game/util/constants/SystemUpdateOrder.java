@@ -5,7 +5,7 @@ package com.droptableteams.game.util.constants;
  * in the order in which the systems should be updated.
  */
 public class SystemUpdateOrder {
-    private static String[] _systemUpdateOrder = {
+    public static final String[] SYSTEM_UPDATE_ORDER = {
             "DurationSystem",
             "HandleInputSystem",
             "SpawnerSystem",
@@ -32,5 +32,5 @@ public class SystemUpdateOrder {
             "RenderSystem",
     };
 
-    public static String[] get() { return _systemUpdateOrder; }
+//    public static String[] get() { return _systemUpdateOrder; }
 }
