@@ -21,33 +21,27 @@ public class CollisionDamageSystem extends AbstractSystem {
 
     // TODO: #3 refactor to move the sound into a component
     private Sound _sound;
-    private EntityManager _em;
-    private AssetManager _am;
 
     public CollisionDamageSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "CollisionDamageSystem";
-        _cm = ComponentManager.getInstance();
-        _em = EntityManager.getInstance();
         _sound = Gdx.audio.newSound(Gdx.files.internal("audio/damage_sound_effect.mp3")); // accessing sound w/o asset manager? -> see todo above
-        _am = ((AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
-    }
-
-    @Override
-    public String getType() {
-        return _type;
+        
     }
 
     @Override
     public void update(int id) {
-        CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(id, "CollisionsComponent");
-        HitpointComponent hc = (HitpointComponent)_cm.getComponent(id, "HitpointComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        EntityManager em = EntityManager.getInstance();
+        AssetManager am = ((AssetManagerComponent)cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
+        CollisionsComponent cc = (CollisionsComponent)cm.getComponent(id, "CollisionsComponent");
+        HitpointComponent hc = (HitpointComponent)cm.getComponent(id, "HitpointComponent");
         ECSEngine engine = ECSEngine.get();
 
         for(int thatId : cc.getCollisions()) {
 
-            DamageComponent thatDc = (DamageComponent)_cm.getComponent(thatId, "DamageComponent");
+            DamageComponent thatDc = (DamageComponent)cm.getComponent(thatId, "DamageComponent");
             if(null != thatDc) {
                 hc.subtractHp(thatDc.getDamage());
 
@@ -58,21 +52,21 @@ public class CollisionDamageSystem extends AbstractSystem {
 
                 if (hc.getHp() <= 0) {
                     if (id == SpecialEntityIds.PLAYER_ENTITY) {
-                        ((LifeCounterComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).decrementLife();
+                        ((LifeCounterComponent) cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).decrementLife();
                     } else {
-                        //int playerID = _em.getEntityIds("PlayerEntity")[0];
+                        //int playerID = em.getEntityIds("PlayerEntity")[0];
                         // Check if _id is an enemy id and if the enemy has a powerupcomponent
 
-                        PowerUpComponent powerUp = (PowerUpComponent)_cm.getComponent(id, "PowerUpComponent");
+                        PowerUpComponent powerUp = (PowerUpComponent)cm.getComponent(id, "PowerUpComponent");
                         if(powerUp != null && powerUp._hasPowerUp){
                             Json json = new Json();
 
                             PowerUpData pd = json.fromJson(PowerUpData.class, Gdx.files.internal(powerUp._powerUpType));
-                            LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
+                            LocationComponent lc = (LocationComponent)cm.getComponent(id, "LocationComponent");
                             pd.x = lc.getX();
                             pd.y = lc.getY();
 
-                            PowerUpEntityBuilder pueb = PowerUpEntityBuilder.getInstance(_am);
+                            PowerUpEntityBuilder pueb = PowerUpEntityBuilder.getInstance(am);
                             pueb.setBuildData(pd);
                             engine.addEntity(pueb);
                             pueb.finishBuild();

@@ -26,17 +26,17 @@ public class FireControlSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "FireControlSystem";
-        _cm = ComponentManager.getInstance();
         _sound = Gdx.audio.newSound(Gdx.files.internal("audio/laser_sound.mp3")); // not using asset manager?
     }
 
     @Override
     public void update(int id) {
+        ComponentManager cm = ComponentManager.getInstance();
         LocationComponent lc = (LocationComponent)ComponentManager.getInstance().getComponent(id, "LocationComponent");
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(id, "FireControlComponent");
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(id, "FirePatternComponent");
-        AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
-        GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
+        FireControlComponent fcc = (FireControlComponent)cm.getComponent(id, "FireControlComponent");
+        FirePatternComponent fpc = (FirePatternComponent)cm.getComponent(id, "FirePatternComponent");
+        AssetManagerComponent amc = (AssetManagerComponent)cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
+        GameCheatsComponent gcc = (GameCheatsComponent) cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         LocationComponent plc = (LocationComponent)ComponentManager.getInstance().getComponent(SpecialEntityIds.PLAYER_ENTITY, "LocationComponent");
 
         // apply fire pattern rotation

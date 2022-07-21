@@ -15,14 +15,14 @@ public class DirectionalMovementSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "DirectionalMovementSystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(id, "VelocityComponent");
-        MoveDirectionComponent mdc = (MoveDirectionComponent) _cm.getComponent(id, "MoveDirectionComponent");
-        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        VelocityComponent vc = (VelocityComponent)cm.getComponent(id, "VelocityComponent");
+        MoveDirectionComponent mdc = (MoveDirectionComponent) cm.getComponent(id, "MoveDirectionComponent");
+        LocationComponent lc = (LocationComponent)cm.getComponent(id, "LocationComponent");
         float newDx = 0;
         float newDy = 0;
         Float angle = mdc.getRadians();

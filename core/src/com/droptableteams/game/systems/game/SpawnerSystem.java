@@ -17,20 +17,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class SpawnerSystem extends AbstractSystem {
-    private ComponentManager _cm;
 
     public SpawnerSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "SpawnerSystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        SpawnListComponent slc = (SpawnListComponent) _cm.getComponent(id, "SpawnListComponent");
-        GameTimeComponent gtc = (GameTimeComponent) _cm.getComponent(id, "GameTimeComponent");
-        AssetManagerComponent amc = (AssetManagerComponent) _cm.getComponent(id, "AssetManagerComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        SpawnListComponent slc = (SpawnListComponent) cm.getComponent(id, "SpawnListComponent");
+        GameTimeComponent gtc = (GameTimeComponent) cm.getComponent(id, "GameTimeComponent");
+        AssetManagerComponent amc = (AssetManagerComponent) cm.getComponent(id, "AssetManagerComponent");
         EnemyEntityBuilder enemyBuilder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
         BossEntityBuilder bossBuilder = BossEntityBuilder.getInstance(amc.getAssetManager());
         ArrayList<Spawnable> flaggedForRemoval = new ArrayList<Spawnable>();

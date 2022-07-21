@@ -19,13 +19,13 @@ public class DespawnOutOfBoundsSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "DespawnOutOfBoundsSystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
-        HasBeenInboundsComponent ibc = (HasBeenInboundsComponent)_cm.getComponent(id, "HasBeenInboundsComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        LocationComponent lc = (LocationComponent)cm.getComponent(id, "LocationComponent");
+        HasBeenInboundsComponent ibc = (HasBeenInboundsComponent)cm.getComponent(id, "HasBeenInboundsComponent");
         boolean hasBeenInbounds = ibc.getHasBeenInBounds();
         float leftBound = 0;
         float rightBound = Gdx.graphics.getWidth();

@@ -13,7 +13,6 @@ public abstract class AbstractSystem {
 
     protected Set<Integer> _idSet;
     protected String _type;
-    protected ComponentManager _cm;
 
     public Set<Integer> getIds() {
         return _idSet;

@@ -18,30 +18,28 @@ import java.util.HashSet;
 
 // TODO: HandleInputSystem should belong to the GameEntity, not the player
 public class HandleInputSystem extends AbstractSystem {
-    private EntityManager _em;
 
     public HandleInputSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "HandleInputSystem";
-        _cm = ComponentManager.getInstance();
-        _em = EntityManager.getInstance();
     }
 
 
     @Override
     public void update(int id) {
-        if(_em.getEntities("PlayerEntity").size() == 0){
+        ComponentManager cm = ComponentManager.getInstance();
+        EntityManager em = EntityManager.getInstance();
+        if(em.getEntities("PlayerEntity").size() == 0){
             return;
         }
-        MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "MoveDirectionComponent");
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FirePatternComponent");
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FireControlComponent");
-        GameCheatsComponent gcc = (GameCheatsComponent)
-                _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
+        MoveDirectionComponent mdc = (MoveDirectionComponent)cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "MoveDirectionComponent");
+        FirePatternComponent fpc = (FirePatternComponent)cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FirePatternComponent");
+        FireControlComponent fcc = (FireControlComponent)cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FireControlComponent");
+        GameCheatsComponent gcc = (GameCheatsComponent) cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
 
-        Integer hitboxId = (Integer)_em.getEntities("VisibleHitboxEntity").keySet().toArray()[0];
-        SpriteComponent spc = (SpriteComponent)_cm.getComponent(hitboxId, "SpriteComponent");
+        Integer hitboxId = (Integer)em.getEntities("VisibleHitboxEntity").keySet().toArray()[0];
+        SpriteComponent spc = (SpriteComponent)cm.getComponent(hitboxId, "SpriteComponent");
 
         setMoveDirection(mdc);
         setSlowMode(gcc, spc);

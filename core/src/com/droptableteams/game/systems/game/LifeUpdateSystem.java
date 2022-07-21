@@ -16,32 +16,32 @@ import java.util.HashSet;
 
 // TODO: consider making this a normal system? (not game system)
 public class LifeUpdateSystem extends AbstractSystem {
-    private EntityManager _em;
 
     public LifeUpdateSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "LifeUpdateSystem";
-        _cm = ComponentManager.getInstance();
-        _em = EntityManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        AssetManager am = ((AssetManagerComponent) _cm.getComponent(id, "AssetManagerComponent")).getAssetManager();
-        LifeCounterComponent counter =(LifeCounterComponent) _cm.getComponents("LifeCounterComponent").get(SpecialEntityIds.PLAYER_ENTITY);
-        if(counter != null  && _em.getEntities("LifeDisplayEntity") != null &&_em.getEntities("LifeDisplayEntity").size() > counter.getLifeCount()){
+        ComponentManager cm = ComponentManager.getInstance();
+        EntityManager em = EntityManager.getInstance();
+        AssetManager am = ((AssetManagerComponent) cm.getComponent(id, "AssetManagerComponent")).getAssetManager();
+        LifeCounterComponent counter =(LifeCounterComponent) cm.getComponents("LifeCounterComponent").get(SpecialEntityIds.PLAYER_ENTITY);
+        if(counter != null  && em.getEntities("LifeDisplayEntity") != null &&em.getEntities("LifeDisplayEntity").size() > counter.getLifeCount()){
             int currentLife = FindHighestLifeID();
             ECSEngine.get().flagEntityForRemoval(currentLife);
         }
-        while(counter != null &&  _em.getEntities("LifeDisplayEntity")!= null && _em.getEntities("LifeDisplayEntity").size() < counter.getLifeCount()) {
+        while(counter != null &&  em.getEntities("LifeDisplayEntity")!= null && em.getEntities("LifeDisplayEntity").size() < counter.getLifeCount()) {
             ECSEngine.get().addEntity(LifeDisplayBuilder.getInstance(am));
         }
     }
 
     private int FindHighestLifeID() {
+        EntityManager em = EntityManager.getInstance();
         int max = 0;
-        for(AbstractEntity x : _em.getEntities("LifeDisplayEntity").values()){
+        for(AbstractEntity x : em.getEntities("LifeDisplayEntity").values()){
             if(x.getId() > max){
                 max = x.getId();
             }

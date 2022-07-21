@@ -16,15 +16,10 @@ import java.util.HashSet;
 
 public class EndGameSystem extends AbstractSystem {
 
-    // TODO: Move state variables out of system -> should be in components
+    // TODO: #9 Move state variables out of system -> should be in components
     private boolean victory;
     private boolean defeat;
     private  boolean gameOver;
-    
-    private EntityManager _em;
-    private ComponentManager _cm;
-    private AssetManager _am;
-
 
     public EndGameSystem(int id){
         _idSet = new HashSet<Integer>();
@@ -33,21 +28,21 @@ public class EndGameSystem extends AbstractSystem {
         victory = false;
         defeat = false;
         gameOver = false;
-        _em = EntityManager.getInstance();
-        _cm = ComponentManager.getInstance();
-        _am = ((AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
     }
 
     @Override
     public void update(int id) {
+        EntityManager em = EntityManager.getInstance();
+        ComponentManager cm = ComponentManager.getInstance();
+        
         if(!gameOver) {
-            SpawnListComponent slc = (SpawnListComponent) _cm.getComponent(id, "SpawnListComponent");
+            SpawnListComponent slc = (SpawnListComponent) cm.getComponent(id, "SpawnListComponent");
 
-            if (slc.getSpawnList().size() == 0 && (_em.getEntities("EnemyEntity") == null || _em.getEntities("EnemyEntity").size() == 0)
-                    && (_em.getEntities("BossEntity") == null || _em.getEntities("BossEntity").size() == 0)) {
+            if (slc.getSpawnList().size() == 0 && (em.getEntities("EnemyEntity") == null || em.getEntities("EnemyEntity").size() == 0)
+                    && (em.getEntities("BossEntity") == null || em.getEntities("BossEntity").size() == 0)) {
                 victory = true;
             }
-            if (((LifeCounterComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).getLifeCount() == -1) {
+            if (((LifeCounterComponent) cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).getLifeCount() == -1) {
                 defeat = true;
             }
 
@@ -62,14 +57,16 @@ public class EndGameSystem extends AbstractSystem {
         }
     }
     private void displayVictory(){
-        StaticSpriteEntityBuilder.getInstance(_am).setBuildData("sprites/victory.png");
-        ECSEngine.get().addEntity(StaticSpriteEntityBuilder.getInstance(_am));
-        StaticSpriteEntityBuilder.getInstance(_am).finishBuild();
+        ComponentManager cm = ComponentManager.getInstance();
+        AssetManager am = ((AssetManagerComponent)cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
+        StaticSpriteEntityBuilder.getInstance(am).setBuildData("sprites/victory.png");
+        ECSEngine.get().addEntity(StaticSpriteEntityBuilder.getInstance(am));
+        StaticSpriteEntityBuilder.getInstance(am).finishBuild();
 
     }
     private void displayDefeat(){
-        StaticSpriteEntityBuilder.getInstance(_am).setBuildData("sprites/defeat.png");
-        ECSEngine.get().addEntity(StaticSpriteEntityBuilder.getInstance(_am));
-        StaticSpriteEntityBuilder.getInstance(_am).finishBuild();
+        StaticSpriteEntityBuilder.getInstance(am).setBuildData("sprites/defeat.png");
+        ECSEngine.get().addEntity(StaticSpriteEntityBuilder.getInstance(am));
+        StaticSpriteEntityBuilder.getInstance(am).finishBuild();
     }
 }

@@ -16,14 +16,15 @@ public class DestinationMovementSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "DestinationMovementSystem";
-        _cm = ComponentManager.getInstance();
+        
     }
 
     @Override
     public void update(int id) {
-        DestinationMovementComponent dmc = (DestinationMovementComponent)_cm.getComponent(id, "DestinationMovementComponent");
-        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(id, "VelocityComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        DestinationMovementComponent dmc = (DestinationMovementComponent)cm.getComponent(id, "DestinationMovementComponent");
+        LocationComponent lc = (LocationComponent)cm.getComponent(id, "LocationComponent");
+        VelocityComponent vc = (VelocityComponent)cm.getComponent(id, "VelocityComponent");
 
         travelTowardsDestination(dmc,lc,vc);
     }

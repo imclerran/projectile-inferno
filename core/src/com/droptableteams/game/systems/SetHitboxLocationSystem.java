@@ -13,13 +13,14 @@ public class SetHitboxLocationSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "SetHitboxLocationSystem";
-        _cm = ComponentManager.getInstance();
+        
     }
 
     @Override
     public void update(int id) {
-        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
-        HitboxComponent hc = (HitboxComponent)_cm.getComponent(id, "HitboxComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        LocationComponent lc = (LocationComponent)cm.getComponent(id, "LocationComponent");
+        HitboxComponent hc = (HitboxComponent)cm.getComponent(id, "HitboxComponent");
         hc.getHitbox().setCenter(lc.getX(), lc.getY());
     }
 }

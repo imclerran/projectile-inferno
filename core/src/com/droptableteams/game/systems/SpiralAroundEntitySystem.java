@@ -17,15 +17,15 @@ public class SpiralAroundEntitySystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "SpiralAroundEntitySystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        SpiralComponent sc = (SpiralComponent) _cm.getComponent(id, "SpiralComponent");
-        RelativePositionComponent rpc = (RelativePositionComponent)_cm.getComponent(id, "RelativePositionComponent");
-        GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
-        DurationComponent dc = (DurationComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "DurationComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        SpiralComponent sc = (SpiralComponent) cm.getComponent(id, "SpiralComponent");
+        RelativePositionComponent rpc = (RelativePositionComponent)cm.getComponent(id, "RelativePositionComponent");
+        GameCheatsComponent gcc = (GameCheatsComponent) cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
+        DurationComponent dc = (DurationComponent) cm.getComponent(SpecialEntityIds.GAME_ENTITY, "DurationComponent");
 
         float currentAngle = rpc.getAngle();
         float currentRadius = rpc.getRadius();

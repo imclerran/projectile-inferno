@@ -14,12 +14,12 @@ public class DespawnWithDurationSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "DespawnWithDurationSystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        DurationComponent dc =  (DurationComponent)_cm.getComponent(id, "DurationComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        DurationComponent dc =  (DurationComponent)cm.getComponent(id, "DurationComponent");
         if(dc.durationMet) {
             ECSEngine.get().flagEntityForRemoval(id);
         }

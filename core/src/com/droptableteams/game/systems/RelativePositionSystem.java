@@ -13,14 +13,14 @@ public class RelativePositionSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "RelativePositionSystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        RelativePositionComponent rpc = (RelativePositionComponent)_cm.getComponent(id, "RelativePositionComponent");
-        LocationComponent thisLc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
-        LocationComponent thatLc = (LocationComponent)_cm.getComponent(rpc.getRelativeEntityId(), "LocationComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        RelativePositionComponent rpc = (RelativePositionComponent)cm.getComponent(id, "RelativePositionComponent");
+        LocationComponent thisLc = (LocationComponent)cm.getComponent(id, "LocationComponent");
+        LocationComponent thatLc = (LocationComponent)cm.getComponent(rpc.getRelativeEntityId(), "LocationComponent");
         float angle = rpc.getAngle();
         float hyp = rpc.getRadius();
         float adj = (float)(Math.cos(angle)*hyp);
