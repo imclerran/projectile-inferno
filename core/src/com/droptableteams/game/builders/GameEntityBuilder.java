@@ -56,7 +56,7 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call setBuildData() first.");
         }
         ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
-        cl.add(new RenderComponent(_id, _batch, EntityRenderOrder.get()));
+        cl.add(new RenderComponent(_id, _batch, EntityRenderOrder.ENTITY_RENDER_ORDER));
         cl.add(new AssetManagerComponent(_id, _am));
         cl.add(new GameCheatsComponent(_id, 0.5f));
         cl.add(new SpawnListComponent(_id, ScriptReader.readLevel("test-level-with-waves.json")));

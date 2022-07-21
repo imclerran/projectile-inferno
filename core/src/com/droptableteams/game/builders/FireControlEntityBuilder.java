@@ -71,7 +71,7 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
         if (fpt.deltaTheta != 0f || fpt.fcDeltaRadius != 0) {
             cl.add(new SpiralComponent(_id, fpt.fcDeltaRadius, fpt.fcDeltaTheta));
         }
-        LocationComponent plc = (LocationComponent) ECSEngine.getInstance(SystemUpdateOrder.get()).getComponentManager().getComponent(_fcd.parentId, "LocationComponent");
+        LocationComponent plc = (LocationComponent) ECSEngine.getInstance(SystemUpdateOrder.SYSTEM_UPDATE_ORDER).getComponentManager().getComponent(_fcd.parentId, "LocationComponent");
         GameTimeComponent gtc = (GameTimeComponent) ComponentManager.getInstance().getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent");
         long currentTime = gtc.getTimeInMillis();
         cl.add(new DurationComponent(_id, fpt.fcDurationType, fpt.duration, currentTime));

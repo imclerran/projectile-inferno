@@ -47,7 +47,7 @@ public class LifeDisplayBuilder extends AbstractEntityBuilder {
         float height = 14;
         float x = Gdx.graphics.getWidth();
         float y = Gdx.graphics.getHeight();
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.SYSTEM_UPDATE_ORDER);
         EntityManager em = engine.getEntityManager();
         int numOfLifeEntities = 0;
         if(em.getEntities("LifeDisplayEntity") != null)

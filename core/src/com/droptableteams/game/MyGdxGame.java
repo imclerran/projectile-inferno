@@ -37,7 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		_batch = new SpriteBatch();
 		_am = new AssetManager();
 		loadAssets();
-		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
+		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.SYSTEM_UPDATE_ORDER);
 		initializeEntities();
 		parseTypeData();
 	}
