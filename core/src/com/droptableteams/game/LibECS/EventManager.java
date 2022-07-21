@@ -159,7 +159,7 @@ public class EventManager {
      * @return  true if at least one event listener was removed.
      */
     public boolean removeEventListener(int id, String type) {
-        // TODO: fix always returns true
+        // TODO: fix always returns true - fixed?
         AbstractEventListener el1 = _eventListenerIdPool.get(id).remove(type);
         AbstractEventListener el2 = _eventListenerTypePool.get(type).remove(id);
         if(null != el1 || null != el2) {

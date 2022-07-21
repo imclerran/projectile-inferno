@@ -8,7 +8,10 @@ import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import java.util.ArrayList;
 
 /**
- * Description goes here...
+ * ECSEngine is the primary endpoint for accessing and interacting with Entities, Components, and Systems.
+ * The engine contains methods for adding and removing entities, as well as the main update method for 
+ * updating all systems.
+ *
  * @author Ian McLerran
  */
 public class ECSEngine {
@@ -65,6 +68,16 @@ public class ECSEngine {
         if(null == _engine) {
             _engine = new ECSEngine(systemUpdateOrder);
         }
+        return _engine;
+    }
+
+    /*
+     * Gets an instance of ECSEngine, only when ECSEngine is already initialized.
+     * <p> NOTE: ECSEngine should always be initialized by calling {@link #getInstance(String[]) getInstance} first.
+     *
+     * @return  the pre-initialized instance of ECSEngine singleton
+     */
+    public static ECSEngine get() {
         return _engine;
     }
 
@@ -128,11 +141,12 @@ public class ECSEngine {
 
     /**
      * Remove an entity, and all of its components and systems.
-     *
+     * 
+     * @deprecated use {@link #flagEntityForRemoval(int) flagEntityForRemoval} instead.
      * @param id  the id of the entity to remove.
      * @return  true if successfully removed.
      */
-    @Deprecated
+    @Deprecated//(forRemoval = true)
     public boolean removeEntity(int id) {
         boolean removed = _em.removeEntity(id);
         _cm.removeComponents(id);

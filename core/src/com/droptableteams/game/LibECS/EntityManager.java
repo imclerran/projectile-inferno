@@ -57,6 +57,16 @@ public class EntityManager {
     }
 
     /**
+     * Get the type of a specified entity.
+     *
+     * @param id  the id of the entity to look up
+     * @return  the type entity
+     */
+    public String getEntityType(int id) {
+        return _entities.get(id).getType();
+    }
+
+    /**
      * Get an available entity id to be used for new entity creation.
      *
      * @return  an available entity id.

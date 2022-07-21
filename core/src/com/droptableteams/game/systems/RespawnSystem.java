@@ -28,6 +28,10 @@ public class RespawnSystem extends AbstractSystem {
         _em = EntityManager.getInstance();
     }
 
+    // TODO: decouple shield from respawn system -> move shield into it's own entity
+    // -> in progress: entity already exists
+    // -> TODO: begin using shield entity and remove shielding logic from respawn system
+
     @Override
     public void update(int id) {
         GameTimeComponent gtc = (GameTimeComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent");
@@ -35,7 +39,7 @@ public class RespawnSystem extends AbstractSystem {
         ShieldComponent sc = (ShieldComponent) _cm.getComponent(id, "ShieldComponent");
         HitpointComponent hpc = (HitpointComponent) _cm.getComponent(id, "HitpointComponent");
         if(sc.isShielded() && gtc.getTimeInMillis() >= sc.getShieldStartTime()+1500) {
-            ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(SpecialEntityIds.SHIELD_ENTITY);
+            ECSEngine.get().flagEntityForRemoval(SpecialEntityIds.SHIELD_ENTITY);
             sc.setShielded(false);
         }else {
             if (lcc.getIsDead()) {
@@ -56,7 +60,7 @@ public class RespawnSystem extends AbstractSystem {
         AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
         ShieldComponent sc = (ShieldComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "ShieldComponent");
         sc.setShieldStartTime(gtc.getTimeInMillis());
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        ECSEngine engine = ECSEngine.get();
         ShieldEntityBuilder builder = ShieldEntityBuilder.getInstance(amc.getAssetManager());
         engine.addEntity(builder);
     }

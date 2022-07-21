@@ -10,6 +10,7 @@ import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.EnemyEntity;
+import com.droptableteams.game.util.constants.Enums;
 import com.droptableteams.game.util.types.EnemyType;
 import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.systems.*;
@@ -75,6 +76,8 @@ public class EnemyEntityBuilder extends AbstractEntityBuilder {
         cl.add(new FireControlComponent(_id, et.firePattern.getFireRate(), true));
         cl.add(new FirePatternComponent(_id, et.firePattern.getBaseDirection(),et.firePattern.getFireRate(),et.firePattern.getNumberOfBullets(),
                 et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
+        cl.add(new FriendFoeComponent(_id, Enums.Team.ADVERSARY));
+        cl.add(new TargetableEntityComponent(_id));
         return cl;
     }
 

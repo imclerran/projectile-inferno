@@ -14,6 +14,7 @@ import com.droptableteams.game.entities.ShieldEntity;
 import com.droptableteams.game.systems.RelativePositionSystem;
 import com.droptableteams.game.systems.SetHitboxLocationSystem;
 import com.droptableteams.game.systems.UpdateSpriteSystem;
+import com.droptableteams.game.util.constants.Enums;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 
 import java.util.ArrayList;
@@ -70,6 +71,9 @@ public class ShieldEntityBuilder extends AbstractEntityBuilder {
         cl.add(new SizeComponent(_id, width,height));
         cl.add(new VelocityComponent(_id, 360));
         cl.add(new RelativePositionComponent(_id, 0,0, SpecialEntityIds.PLAYER_ENTITY));
+        cl.add(new CollisionsComponent(_id));
+        cl.add(new FriendFoeComponent(_id, Enums.Team.PLAYER));
+        cl.add(new TargetableEntityComponent(_id));
         return cl;
     }
 

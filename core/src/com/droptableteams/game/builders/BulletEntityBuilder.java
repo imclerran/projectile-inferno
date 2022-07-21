@@ -10,6 +10,8 @@ import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BulletEntity;
+import com.droptableteams.game.util.constants.Enums;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.types.BulletType;
 import com.droptableteams.game.util.data.BulletData;
 import com.droptableteams.game.systems.*;
@@ -75,6 +77,10 @@ public class BulletEntityBuilder extends AbstractEntityBuilder {
         cl.add(new OwnerComponent(_id, _bd.ownerId));
         cl.add(new DamageComponent(_id, bt.damage));
         cl.add(new HitboxComponent(_id, new Rectangle(_bd.x,_bd.y,bt.width,bt.height)));
+        cl.add(new FriendFoeComponent(_id, (SpecialEntityIds.PLAYER_ENTITY == _bd.ownerId) ? Enums.Team.PLAYER : Enums.Team.ADVERSARY));
+        if(SpecialEntityIds.PLAYER_ENTITY != _bd.ownerId) {
+            cl.add(new TargetableEntityComponent(_id));
+        }
         return cl;
     }
 

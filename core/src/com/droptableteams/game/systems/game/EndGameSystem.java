@@ -16,11 +16,12 @@ import java.util.HashSet;
 
 public class EndGameSystem extends AbstractSystem {
 
+    // TODO: Move state variables out of system -> should be in components
     private boolean victory;
     private boolean defeat;
     private  boolean gameOver;
+    
     private EntityManager _em;
-    private ECSEngine _engine;
     private ComponentManager _cm;
     private AssetManager _am;
 
@@ -33,7 +34,6 @@ public class EndGameSystem extends AbstractSystem {
         defeat = false;
         gameOver = false;
         _em = EntityManager.getInstance();
-        _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         _cm = ComponentManager.getInstance();
         _am = ((AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
     }
@@ -63,13 +63,13 @@ public class EndGameSystem extends AbstractSystem {
     }
     private void displayVictory(){
         StaticSpriteEntityBuilder.getInstance(_am).setBuildData("sprites/victory.png");
-        _engine.addEntity(StaticSpriteEntityBuilder.getInstance(_am));
+        ECSEngine.get().addEntity(StaticSpriteEntityBuilder.getInstance(_am));
         StaticSpriteEntityBuilder.getInstance(_am).finishBuild();
 
     }
     private void displayDefeat(){
         StaticSpriteEntityBuilder.getInstance(_am).setBuildData("sprites/defeat.png");
-        _engine.addEntity(StaticSpriteEntityBuilder.getInstance(_am));
+        ECSEngine.get().addEntity(StaticSpriteEntityBuilder.getInstance(_am));
         StaticSpriteEntityBuilder.getInstance(_am).finishBuild();
     }
 }

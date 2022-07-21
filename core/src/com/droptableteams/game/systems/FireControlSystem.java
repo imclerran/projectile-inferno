@@ -27,7 +27,7 @@ public class FireControlSystem extends AbstractSystem {
         _idSet.add(id);
         _type = "FireControlSystem";
         _cm = ComponentManager.getInstance();
-        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/laser_sound.mp3"));
+        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/laser_sound.mp3")); // not using asset manager?
     }
 
     @Override
@@ -74,7 +74,7 @@ public class FireControlSystem extends AbstractSystem {
 
     private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y, int id) {
         BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
-        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        ECSEngine engine = ECSEngine.get();
         BulletType bt = (BulletType)SubtypeManager.getInstance().getSubtype(fpc.getBulletType());
         int numBullets = fpc.getNumberOfBullets();
         float baseDirection = fpc.getBaseDirection();

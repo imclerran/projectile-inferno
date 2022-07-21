@@ -12,6 +12,7 @@ import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerEntity;
 import com.droptableteams.game.util.constants.Directions;
+import com.droptableteams.game.util.constants.Enums;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.systems.*;
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         cl.add(new FirePatternComponent(_id, Directions.UP,0.125f, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
         cl.add(new LifeCounterComponent(_id, 5));
         cl.add(new ShieldComponent(_id));
+        cl.add(new FriendFoeComponent(_id, Enums.Team.PLAYER));
+        cl.add(new TargetableEntityComponent(_id));
         return cl;
     }
 
