@@ -36,7 +36,6 @@ public class BulletCollisionSystem extends AbstractSystem {
 
     @Override
     public void update(int id) {
-        Rectangle intersection = new Rectangle();
         // get all targetable entity components
         Map<Integer, AbstractComponent> tecMap = _cm.getComponents("TargetableEntityComponent");
         // for each targetable entity component, check friendfoe component
@@ -48,14 +47,15 @@ public class BulletCollisionSystem extends AbstractSystem {
                 // if not friendly, check hitbox intersection
                 HitboxComponent thisHbc = (HitboxComponent) _cm.getComponent(id, "HitboxComponent");
                 HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(targetId, "HitboxComponent");
+                Rectangle intersection = new Rectangle();
                 // assign collisions as appropriate
                 if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
                     CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(targetId, "CollisionsComponent");
-                    if ("BulletEntity" == _em.getEntityType(targetId)) {
+                    if ("BulletEntity" == _em.getEntityType(targetId)) { // if colliding with a bullet, simply remove that bullet
                         ECSEngine.get().flagEntityForRemoval(targetId);
                     } else {
                         cc.addCollision(id); // add bullet id to target's collision list
-                        // TODO: dispatch event instead? - can apply to bullet entities as well
+                        // TODO: #6 Dispatch event instead - can apply to bullet entities as well
                     }
                     ECSEngine.get().flagEntityForRemoval(id); // destroy bullet after collision
 

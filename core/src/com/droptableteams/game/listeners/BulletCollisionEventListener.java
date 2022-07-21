@@ -29,7 +29,7 @@ public class BulletCollisionEventListener extends AbstractEventListener {
         HitpointComponent hpc = (HitpointComponent)cm.getComponent(_id, "HitpointComponent");
         if(args.containsKey("bulletType")) {
             //BulletType bt = BulletTypeFactory.make((String)args.get("bulletType"));
-            // TODO: #4 don't parse json at event handling time - json should be parsed at first time use and then data cached
+            // TODO: #2 don't parse json at event handling time - json should be parsed at first time use and then data cached
             Json json = new Json();
             BulletType bt = json.fromJson(BulletType.class, Gdx.files.internal("scripts/enemies/"+ args.get("bulletType") + ".json"));
             hpc.subtractHp(bt.damage);
