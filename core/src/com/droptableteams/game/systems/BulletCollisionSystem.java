@@ -24,34 +24,32 @@ import java.util.Set;
  */
 public class BulletCollisionSystem extends AbstractSystem {
 
-    EntityManager _em;
-
     public BulletCollisionSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "BulletCollisionSystem";
-        _cm = ComponentManager.getInstance();
-        _em = EntityManager.getInstance();
     }
 
     @Override
     public void update(int id) {
+        ComponentManager cm = ComponentManager.getInstance();
+        EntityManager em = EntityManager.getInstance();
         // get all targetable entity components
-        Map<Integer, AbstractComponent> tecMap = _cm.getComponents("TargetableEntityComponent");
+        Map<Integer, AbstractComponent> tecMap = cm.getComponents("TargetableEntityComponent");
         // for each targetable entity component, check friendfoe component
         for (Map.Entry<Integer, AbstractComponent> e : tecMap.entrySet()) {
             int targetId = e.getKey();
-            FriendFoeComponent thisFfc = (FriendFoeComponent) _cm.getComponent(id, "FriendFoeComponent");
-            FriendFoeComponent thatFfc = (FriendFoeComponent) _cm.getComponent(targetId, "FriendFoeComponent");
+            FriendFoeComponent thisFfc = (FriendFoeComponent) cm.getComponent(id, "FriendFoeComponent");
+            FriendFoeComponent thatFfc = (FriendFoeComponent) cm.getComponent(targetId, "FriendFoeComponent");
             if (!thatFfc.isFriendly(thisFfc.getTeam())) {
                 // if not friendly, check hitbox intersection
-                HitboxComponent thisHbc = (HitboxComponent) _cm.getComponent(id, "HitboxComponent");
-                HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(targetId, "HitboxComponent");
+                HitboxComponent thisHbc = (HitboxComponent) cm.getComponent(id, "HitboxComponent");
+                HitboxComponent thatHbc = (HitboxComponent) cm.getComponent(targetId, "HitboxComponent");
                 Rectangle intersection = new Rectangle();
                 // assign collisions as appropriate
                 if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
-                    CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(targetId, "CollisionsComponent");
-                    if ("BulletEntity" == _em.getEntityType(targetId)) { // if colliding with a bullet, simply remove that bullet
+                    CollisionsComponent cc = (CollisionsComponent) cm.getComponent(targetId, "CollisionsComponent");
+                    if ("BulletEntity" == em.getEntityType(targetId)) { // if colliding with a bullet, simply remove that bullet
                         ECSEngine.get().flagEntityForRemoval(targetId);
                     } else {
                         cc.addCollision(id); // add bullet id to target's collision list

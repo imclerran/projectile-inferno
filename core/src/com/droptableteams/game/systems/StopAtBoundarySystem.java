@@ -13,12 +13,12 @@ public class StopAtBoundarySystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "StopAtBoundarySystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        LocationComponent lc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        LocationComponent lc = (LocationComponent)cm.getComponent(id, "LocationComponent");
         float leftBound = 0;
         float rightBound = Gdx.graphics.getWidth();
         float bottomBound = 0;

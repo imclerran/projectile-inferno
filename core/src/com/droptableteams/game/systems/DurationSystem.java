@@ -14,13 +14,12 @@ public class DurationSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "DurationSystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        DurationComponent dc = (DurationComponent)_cm.getComponent(id, "DurationComponent");
-
+        ComponentManager cm = ComponentManager.getInstance();
+        DurationComponent dc = (DurationComponent)cm.getComponent(id, "DurationComponent");
         switch (dc.durationType) {
             case TIME:
                 handleTime(dc);
@@ -37,7 +36,8 @@ public class DurationSystem extends AbstractSystem {
     }
 
     private void handleTime(DurationComponent dc) {
-        GameTimeComponent gtc = (GameTimeComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        GameTimeComponent gtc = (GameTimeComponent)cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent");
         long duration = (long)(dc.duration * 1000);
         if(gtc.getTimeInMillis() - dc.startTime >= duration && duration != 0f) {
             dc.durationMet = true;

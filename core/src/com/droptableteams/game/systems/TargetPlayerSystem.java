@@ -18,9 +18,10 @@ public class TargetPlayerSystem extends AbstractSystem {
 
     @Override
     public void update(int id) {
+        ComponentManager cm = ComponentManager.getInstance();
         LocationComponent lc = (LocationComponent)ComponentManager.getInstance().getComponent(id, "LocationComponent");
         LocationComponent plc = (LocationComponent)ComponentManager.getInstance().getComponent(SpecialEntityIds.PLAYER_ENTITY, "LocationComponent");
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(id, "FirePatternComponent");
+        FirePatternComponent fpc = (FirePatternComponent)cm.getComponent(id, "FirePatternComponent");
 
         float dy = plc.getY() - lc.getY();
         float dx = plc.getX() - lc.getX();

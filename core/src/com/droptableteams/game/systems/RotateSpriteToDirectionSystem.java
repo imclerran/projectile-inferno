@@ -12,14 +12,14 @@ public class RotateSpriteToDirectionSystem extends AbstractSystem {
     public RotateSpriteToDirectionSystem(int id) {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
-        _cm = ComponentManager.getInstance();
         _type = "RotateSpriteToDirectionSystem";
     }
 
     @Override
     public void update(int id) {
-        MoveDirectionComponent mdc = (MoveDirectionComponent) _cm.getComponent(id, "MoveDirectionComponent");
-        SpriteComponent sc = (SpriteComponent) _cm.getComponent(id, "SpriteComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        MoveDirectionComponent mdc = (MoveDirectionComponent) cm.getComponent(id, "MoveDirectionComponent");
+        SpriteComponent sc = (SpriteComponent) cm.getComponent(id, "SpriteComponent");
 
         float degrees = (float)(mdc.getRadians()*180/ Math.PI )-90f; // TODO: replace 90f with defaultSpriteOrientation (in sprite component)
         sc.getSprite().setRotation(degrees);

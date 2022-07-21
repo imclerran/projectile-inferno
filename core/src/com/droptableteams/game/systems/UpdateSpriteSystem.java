@@ -14,14 +14,14 @@ public class UpdateSpriteSystem extends AbstractSystem {
         _idSet = new HashSet<Integer>();
         _idSet.add(id);
         _type = "UpdateSpriteSystem";
-        _cm = ComponentManager.getInstance();
     }
 
     @Override
     public void update(int id) {
-        SpriteComponent sp = (SpriteComponent)_cm.getComponent(id, "SpriteComponent");
-        LocationComponent loc = (LocationComponent)_cm.getComponent(id, "LocationComponent");
-        SizeComponent sz = (SizeComponent)_cm.getComponent(id, "SizeComponent");
+        ComponentManager cm = ComponentManager.getInstance();
+        SpriteComponent sp = (SpriteComponent)cm.getComponent(id, "SpriteComponent");
+        LocationComponent loc = (LocationComponent)cm.getComponent(id, "LocationComponent");
+        SizeComponent sz = (SizeComponent)cm.getComponent(id, "SizeComponent");
 
         sp.getSprite().setCenter(loc.getX(), loc.getY());
         sp.getSprite().setSize(sz.getWidth(), sz.getHeight());
