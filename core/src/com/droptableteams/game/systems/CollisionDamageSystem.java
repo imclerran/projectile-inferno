@@ -19,7 +19,7 @@ import java.util.HashSet;
 
 public class CollisionDamageSystem extends AbstractSystem {
 
-    // TODO: #5 refactor to move the sound into a component
+    // TODO: #3 refactor to move the sound into a component
     private Sound _sound;
     private EntityManager _em;
     private AssetManager _am;
