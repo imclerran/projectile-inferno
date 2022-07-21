@@ -9,12 +9,12 @@ public class SpecialEntityIds {
 
     // TODO: #6 Refactor codebase to remove deprecated SpecialEntityIds getter methods
 
-    @Deprecated(forRemoval = true)
+    @Deprecated//(forRemoval = true)
     public static int getGameEntityId() { return GAME_ENTITY; }
 
-    @Deprecated(forRemoval = true)
+    @Deprecated//(forRemoval = true)
     public static int getPlayerEntityId() { return PLAYER_ENTITY; }
 
-    @Deprecated(forRemoval = true)
+    @Deprecated//(forRemoval = true)
     public static int getVisibleHitboxEntity() { return VISIBLE_HITBOX_ENTITY; }
 }

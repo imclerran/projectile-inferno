@@ -1,6 +1,6 @@
 package com.droptableteams.game.components;
 
-import com.droptableteams.game.util.constants.Enums;
+import com.droptableteams.game.util.constants.Enums.Team;
 import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 
 public class FriendFoeComponent extends AbstractComponent {
@@ -15,5 +15,5 @@ public class FriendFoeComponent extends AbstractComponent {
 
     public Team getTeam() { return _team; }
 
-    public isFriendly(Team team) { return _team == team; }
+    public boolean isFriendly(Team team) { return _team == team; }
 }

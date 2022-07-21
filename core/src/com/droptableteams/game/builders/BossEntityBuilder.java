@@ -13,6 +13,7 @@ import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BossEntity;
 import com.droptableteams.game.systems.*;
+import com.droptableteams.game.util.constants.Enums.Team;
 import com.droptableteams.game.util.data.BossData;
 import com.droptableteams.game.util.types.BossType;
 
@@ -76,6 +77,8 @@ public class BossEntityBuilder extends AbstractEntityBuilder {
         cl.add(new FireControlComponent(_id, bt.firePattern.getFireRate(), true));
         cl.add(new FirePatternComponent(_id, bt.firePattern.getBaseDirection(), bt.firePattern.getFireRate(), bt.firePattern.getNumberOfBullets(),
                 bt.firePattern.getDividingAngle(), bt.firePattern.getDeltaTheta(), bt.firePattern.getBulletType()));
+        cl.add(new FriendFoeComponent(_id, Team.ADVERSARY));
+        cl.add(new TargetableEntityComponent(_id));
         return cl;
     }
 

@@ -77,10 +77,7 @@ public class ECSEngine {
      *
      * @return  the pre-initialized instance of ECSEngine singleton
      */
-    public static ECSEngine get() throws Exception {
-        if (null == _engine) {
-            throw new NullPointerException("ECSEngine must be initialized with getInstance(String[] systemUpdateOrder)");
-        }
+    public static ECSEngine get() {
         return _engine;
     }
 
@@ -149,7 +146,7 @@ public class ECSEngine {
      * @param id  the id of the entity to remove.
      * @return  true if successfully removed.
      */
-    @Deprecated(forRemoval = true)
+    @Deprecated//(forRemoval = true)
     public boolean removeEntity(int id) {
         boolean removed = _em.removeEntity(id);
         _cm.removeComponents(id);
