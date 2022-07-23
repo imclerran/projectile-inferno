@@ -21,7 +21,7 @@ import com.droptableteams.game.util.types.SubtypeManager;
 import java.util.ArrayList;
 
 public class FireControlEntityBuilder extends AbstractEntityBuilder {
-    AssetManager _am;
+    private final AssetManager _am;
     FireControlData _fcd;
 
     private static FireControlEntityBuilder _self;
@@ -60,26 +60,27 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
         if (null == _fcd) {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
-        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
         FirePatternType fpt = (FirePatternType) SubtypeManager.getInstance().getSubtype(_fcd.firePattenrType);
-        if (fpt.fcTexture != "") {
+        ComponentManager cm = ComponentManager.getInstance();
+        LocationComponent plc = (LocationComponent) cm.getComponent(_fcd.parentId, "LocationComponent");
+        GameTimeComponent gtc = (GameTimeComponent) cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent");
+        long currentTime = gtc.getTimeInMillis();
+        ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
+        cl.add(new RelativePositionComponent(_id, fpt.fcInitialTheta, fpt.fcInitialRadius, _fcd.parentId));
+        cl.add(new DurationComponent(_id, fpt.fcDurationType, fpt.duration, currentTime));
+        cl.add(new LocationComponent(_id, plc.getX(), plc.getY()));
+        cl.add(new FireControlComponent(_id, _fcd));
+        cl.add(new OwnerComponent(_id, _fcd.parentId));
+        cl.add(new FirePatternComponent(_id, fpt.baseDirection, fpt.rateOfFire, fpt.numberOfBullets,
+                fpt.dividingAngle, fpt.deltaTheta, fpt.bulletType));
+        if (!fpt.fcTexture.equals("")) {
             Sprite sp = new Sprite(_am.get(fpt.fcTexture, Texture.class));
             cl.add(new SpriteComponent(_id, sp));
             cl.add(new SizeComponent(_id, fpt.fcWidth, fpt.fcHeight));
         }
-        cl.add(new RelativePositionComponent(_id, fpt.fcInitialTheta, fpt.fcInitialRadius, _fcd.parentId));
         if (fpt.deltaTheta != 0f || fpt.fcDeltaRadius != 0) {
             cl.add(new SpiralComponent(_id, fpt.fcDeltaRadius, fpt.fcDeltaTheta));
         }
-        LocationComponent plc = (LocationComponent) ECSEngine.getInstance(SystemUpdateOrder.SYSTEM_UPDATE_ORDER).getComponentManager().getComponent(_fcd.parentId, "LocationComponent");
-        GameTimeComponent gtc = (GameTimeComponent) ComponentManager.getInstance().getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent");
-        long currentTime = gtc.getTimeInMillis();
-        cl.add(new DurationComponent(_id, fpt.fcDurationType, fpt.duration, currentTime));
-        cl.add(new LocationComponent(_id, plc.getX(), plc.getY()));
-        cl.add(new FireControlComponent(_id, _fcd));
-        cl.add(new FirePatternComponent(_id, fpt.baseDirection, fpt.rateOfFire, fpt.numberOfBullets,
-                fpt.dividingAngle, fpt.deltaTheta, fpt.bulletType));
-        cl.add(new OwnerComponent(_id, _fcd.parentId));
         return cl;
     }
 
@@ -91,12 +92,11 @@ public class FireControlEntityBuilder extends AbstractEntityBuilder {
         }
         FirePatternType fpt = (FirePatternType) SubtypeManager.getInstance().getSubtype(_fcd.firePattenrType);
         ArrayList<AbstractSystem> sl = new ArrayList<AbstractSystem>();
-
         sl.add(new RelativePositionSystem(_id));
         if (fpt.fcDeltaRadius != 0 || fpt.fcDeltaTheta != 0) {
             sl.add(new SpiralAroundEntitySystem(_id));
         }
-        if (fpt.fcTexture != "") {
+        if (!fpt.fcTexture.equals("")) {
             sl.add(new UpdateSpriteSystem(_id));
         }
         sl.add(new FireControlSystem(_id));

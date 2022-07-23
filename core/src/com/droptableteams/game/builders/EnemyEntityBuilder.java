@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class EnemyEntityBuilder extends AbstractEntityBuilder {
     private static EnemyEntityBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
     private EnemyData _ed;
 
     private EnemyEntityBuilder(AssetManager am) {

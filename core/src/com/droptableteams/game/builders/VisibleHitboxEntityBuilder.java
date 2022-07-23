@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class VisibleHitboxEntityBuilder extends AbstractEntityBuilder {
     private static VisibleHitboxEntityBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
 
     private VisibleHitboxEntityBuilder(AssetManager am) {
         _am = am;
@@ -57,7 +57,6 @@ public class VisibleHitboxEntityBuilder extends AbstractEntityBuilder {
         Sprite sp = new Sprite(_am.get("sprites/hitbox.png", Texture.class));
         sp.setSize(width,height);
         sp.setCenter(x,y);
-        cl.clear();
         cl.add(new SpriteComponent(_id, sp, false));
         cl.add(new LocationComponent(_id, x,y));
         cl.add(new SizeComponent(_id, width,height));
