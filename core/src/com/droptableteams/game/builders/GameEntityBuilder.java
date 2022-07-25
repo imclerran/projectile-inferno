@@ -62,6 +62,7 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
         cl.add(new GameCheatsComponent(_id, 0.5f));
         cl.add(new SpawnListComponent(_id, waveList));
         cl.add(new GameTimeComponent(_id));
+        cl.add(new VictoryStateComponent(_id));
         return cl;
     }
 
