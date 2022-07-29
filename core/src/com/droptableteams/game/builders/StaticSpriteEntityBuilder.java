@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class StaticSpriteEntityBuilder extends AbstractEntityBuilder {
     private static StaticSpriteEntityBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
     private String sprite_data;
 
     private StaticSpriteEntityBuilder(AssetManager am) {

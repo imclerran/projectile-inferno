@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class BulletEntityBuilder extends AbstractEntityBuilder {
     private static BulletEntityBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
     private BulletData _bd;
 
     private BulletEntityBuilder(AssetManager am) {

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class LifeDisplayBuilder extends AbstractEntityBuilder {
     private static LifeDisplayBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
 
     public static LifeDisplayBuilder getInstance(AssetManager am){
         if(null == _self) {

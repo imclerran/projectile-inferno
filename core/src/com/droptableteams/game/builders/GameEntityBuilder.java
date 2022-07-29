@@ -1,34 +1,33 @@
 package com.droptableteams.game.builders;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractComponent;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.AbstractSystem;
 import com.droptableteams.game.components.game.*;
 import com.droptableteams.game.entities.GameEntity;
 import com.droptableteams.game.systems.game.*;
 import com.droptableteams.game.util.ScriptReader;
-import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.util.Wave;
 import com.droptableteams.game.util.constants.EntityRenderOrder;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
 
 import java.util.ArrayList;
 
 public class GameEntityBuilder extends AbstractEntityBuilder {
     private static GameEntityBuilder _self;
-    private AssetManager _am;
-    private SpriteBatch _batch;
-    private Sound _sound;
+    private final AssetManager _am;
+    private final SpriteBatch _batch;
 
     private GameEntityBuilder(AssetManager am, SpriteBatch batch) {
         _am = am;
         _batch = batch;
         _id = null;
-        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/background_music.mp3"));
-        _sound.play(0.35f);
+        Sound sound = am.get("audio/background_music.mp3", Sound.class);
+        sound.play(0.35f);
     }
 
     public static GameEntityBuilder getInstance(AssetManager am, SpriteBatch batch) {
@@ -56,11 +55,14 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call setBuildData() first.");
         }
         ArrayList<AbstractComponent> cl = new ArrayList<AbstractComponent>();
+        ArrayList<Wave> waveList = ScriptReader.readLevel("test-level-with-waves.json");
+        waveList = (null == waveList) ? new ArrayList<Wave>() : waveList;
         cl.add(new RenderComponent(_id, _batch, EntityRenderOrder.ENTITY_RENDER_ORDER));
         cl.add(new AssetManagerComponent(_id, _am));
         cl.add(new GameCheatsComponent(_id, 0.5f));
-        cl.add(new SpawnListComponent(_id, ScriptReader.readLevel("test-level-with-waves.json")));
+        cl.add(new SpawnListComponent(_id, waveList));
         cl.add(new GameTimeComponent(_id));
+        cl.add(new VictoryStateComponent(_id));
         return cl;
     }
 
@@ -75,35 +77,4 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
         sl.add(new EndGameSystem(_id));
         return sl;
     }
-
-    /*private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-    private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
-    private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
-
-    @Deprecated
-    public static void create(SpriteBatch batch, AssetManager am) {
-        int id = SpecialEntityIds.GAME_ENTITY;
-        IEntity entity = new GameEntity(id);
-        generateComponentList(id, batch, am);
-        generateSystemList(id);
-        _engine.addEntity(entity, _cl, _sl);
-    }
-
-    @Deprecated
-    private static void generateComponentList(int id, SpriteBatch batch, AssetManager am) {
-        _cl.clear();
-        _cl.add(new RenderComponent(id, batch, EntityRenderOrder.get()));
-        _cl.add(new AssetManagerComponent(id, am));
-        _cl.add(new GameCheatsComponent(id, 0.5f));
-        _cl.add(new SpawnListComponent(id, ScriptReader.readLevel("sample-level.json")));
-        _cl.add(new GameTimeComponent(id));
-    }
-
-    @Deprecated
-    private static void generateSystemList(int id) {
-        _sl.clear();
-        _sl.add(new RenderSystem(id));
-        _sl.add(new HandleInputSystem(id));
-        _sl.add(new SpawnerSystem(id));
-    }*/
 }

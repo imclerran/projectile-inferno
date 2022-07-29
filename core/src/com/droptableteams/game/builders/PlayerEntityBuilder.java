@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class PlayerEntityBuilder extends AbstractEntityBuilder {
     private static PlayerEntityBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
 
     private PlayerEntityBuilder(AssetManager am) {
         _am = am;

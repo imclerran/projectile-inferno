@@ -3,20 +3,19 @@ package com.droptableteams.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.builders.GameEntityBuilder;
-import com.droptableteams.game.builders.LifeDisplayBuilder;
 import com.droptableteams.game.builders.PlayerEntityBuilder;
 import com.droptableteams.game.builders.VisibleHitboxEntityBuilder;
-import com.droptableteams.game.entities.PlayerEntity;
 import com.droptableteams.game.util.ScriptReader;
-import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 import com.droptableteams.game.util.TimeVector3;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
+import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.types.BulletType;
 import com.droptableteams.game.util.types.EnemyType;
 
@@ -71,6 +70,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		_am.load("sprites/victory.png", Texture.class);
 		_am.load("sprites/defeat.png", Texture.class);
 		_am.load("sprites/OneUp.png", Texture.class);
+
+		_am.load("audio/background_music.mp3", Sound.class);
         while(!_am.update());
     }
 
@@ -113,8 +114,8 @@ public class MyGdxGame extends ApplicationAdapter {
     private void writeSampleLevelJson() {
     	float initX = Gdx.graphics.getWidth();
     	float initY = Gdx.graphics.getHeight();
-    	float finalX = 3*Gdx.graphics.getWidth()/4;
-    	float finalY = 3*Gdx.graphics.getHeight()/4;
+    	float finalX = 3*Gdx.graphics.getWidth()/4f;
+    	float finalY = 3*Gdx.graphics.getHeight()/4f;
     	ArrayList<TimeVector3> destinations = new ArrayList<TimeVector3>();
     	destinations.add(new TimeVector3(finalX,finalY,0L));
     	EnemyData ed = new EnemyData("EnemyA", destinations, initX,initY);
@@ -130,6 +131,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			System.out.println("File created successfully");
 		}
 		catch (IOException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }

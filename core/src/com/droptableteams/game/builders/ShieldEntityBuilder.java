@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class ShieldEntityBuilder extends AbstractEntityBuilder {
     private static ShieldEntityBuilder _self;
 
-    private AssetManager _am;
+    private final AssetManager _am;
 
     private ShieldEntityBuilder(AssetManager am) {
         _am = am;

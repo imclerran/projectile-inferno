@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class BossEntityBuilder extends AbstractEntityBuilder {
     private static BossEntityBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
     private BossData _bd;
 
     private BossEntityBuilder(AssetManager am) {

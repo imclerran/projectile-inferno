@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PowerUpEntityBuilder extends AbstractEntityBuilder {
     private static PowerUpEntityBuilder _self;
-    private AssetManager _am;
+    private final AssetManager _am;
     private PowerUpData _pd;
 
 
