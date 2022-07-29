@@ -9,7 +9,7 @@ public class VictoryStateComponent extends AbstractComponent {
 
     public VictoryStateComponent(int id) {
         _id = id;
-        _type = "GameCheatsComponent";
+        _type = "VictoryStateComponent";
         _isGameOver = false;
         _isVictory = false;
     }

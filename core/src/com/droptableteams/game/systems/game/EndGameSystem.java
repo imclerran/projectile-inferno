@@ -9,6 +9,7 @@ import com.droptableteams.game.builders.StaticSpriteEntityBuilder;
 import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
+import com.droptableteams.game.components.game.VictoryStateComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
@@ -26,17 +27,19 @@ public class EndGameSystem extends AbstractSystem {
     public void update(int id) {
         EntityManager em = EntityManager.getInstance();
         ComponentManager cm = ComponentManager.getInstance();
-        VictoryStateComponent vsc = (VictoryStateComponent)ComponentManager.getComponent(id, "VictoryStateComponent"); 
+        VictoryStateComponent vsc = (VictoryStateComponent)cm.getComponent(id, "VictoryStateComponent");
         if(!vsc.isGameOver()) {
             SpawnListComponent slc = (SpawnListComponent) cm.getComponent(id, "SpawnListComponent");
             if (slc.getSpawnList().size() == 0 && (em.getEntities("EnemyEntity") == null || em.getEntities("EnemyEntity").size() == 0)
                     && (em.getEntities("BossEntity") == null || em.getEntities("BossEntity").size() == 0)) {
                 vsc.gameOverVictory();
+                displayGameOverMessage(vsc.isVictory());
             }
             if (((LifeCounterComponent) cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).getLifeCount() == -1) {
                 vsc.gameOverDefeat();
+                displayGameOverMessage(vsc.isVictory());
             }
-            displayGameOverMessage(vsc.isVictory());
+
         }
     }
 
