@@ -26,6 +26,7 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
         _am = am;
         _batch = batch;
         _id = null;
+        // TODO: #15 move game soundtrack into a BGM system / component
         Sound sound = am.get("audio/background_music.mp3", Sound.class);
         sound.play(0.35f);
     }
