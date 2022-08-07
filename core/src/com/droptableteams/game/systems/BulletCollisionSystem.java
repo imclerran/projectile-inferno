@@ -12,7 +12,6 @@ import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.HitboxComponent;
 import com.droptableteams.game.components.OwnerComponent;
 import com.droptableteams.game.components.FriendFoeComponent;
-import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 import java.util.HashSet;
